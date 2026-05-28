@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política Educativa y Transformación Curricular</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ================= ESTILO BASE Y ESTRUCTURA ================= */
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
+        
+        body { 
+            background-color: #eef2f6; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 60px; 
+            padding: 60px 20px; 
+        }
+
+        .slide-container {
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 1280px;
+            height: 720px;
+            padding: 50px 70px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Lato', sans-serif;
+            border: 1px solid #d1d5db;
+        }
+
+        /* ================= ERGONOMÍA VISUAL Y TÍTULOS AMIGABLES ================= */
+        h1, h2, h3 { 
+            color: #1e3a8a; 
+            font-family: 'Poppins', sans-serif; 
+        }
+        
+        h1 { 
+            font-size: 58px; 
+            line-height: 1.1; 
+            margin-bottom: 20px; 
+        }
+        
+        h1 span { 
+            color: #b45309; 
+        }
+        
+        .slide-title { 
+            font-size: 38px; 
+            margin-bottom: 30px; 
+            border-bottom: 4px solid #b45309; 
+            padding-bottom: 10px; 
+            width: fit-content; 
+        }
+
+        p, li { 
+            font-size: 21px; 
+            line-height: 1.6; 
+            color: #334155; 
+        }
+
+        /* ================= BOTÓN INTERACTIVO SABÍAS QUE (BOMBILLO) ================= */
+        .btn-bulb-fact {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            background: #d97706;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(217, 119, 6, 0.4);
+            transition: all 0.3s ease;
+            z-index: 10;
+            animation: pulseBulb 2s infinite;
+        }
+
+        .btn-bulb-fact:hover {
+            background: #b45309;
+            transform: scale(1.1);
+        }
+
+        @keyframes pulseBulb {
+            0% { box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.5); }
+            70% { box-shadow: 0 0 0 15px rgba(217, 119, 6, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(217, 119, 6, 0); }
+        }
+
+        /* Ventana Emergente (Modal) */
+        .fact-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .fact-modal.active {
+            display: flex;
+        }
+
+        .fact-modal-content {
+            background: #fffbeb;
+            border: 3px solid #d97706;
+            border-radius: 24px;
+            width: 650px;
+            padding: 40px;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            text-align: center;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .fact-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            color: #9a3412;
+            cursor: pointer;
+        }
+
+        /* ================= SISTEMA DE EXPOSICIÓN GUIADA (REVEAL) ================= */
+        .reveal-trigger {
+            cursor: pointer;
+            background: #f8fafc;
+            padding: 18px 24px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .reveal-trigger:hover { 
+            background: #eff6ff; 
+            border-color: #3b82f6; 
+        }
+        
+        .reveal-trigger i { 
+            color: #b45309; 
+            font-size: 24px; 
+            transition: transform 0.3s; 
+        }
+        
+        .reveal-trigger.active i { 
+            transform: rotate(180deg); 
+            color: #1e3a8a; 
+        }
+
+        .reveal-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, opacity 0.3s ease-out;
+            padding: 0 24px;
+            opacity: 0;
+        }
+        
+        .reveal-content.active { 
+            max-height: 500px; 
+            padding: 15px 24px 25px 24px; 
+            opacity: 1; 
+        }
+
+        /* ================= LÍNEA DE TIEMPO INTERACTIVA HORIZONTAL ================= */
+        .timeline-viz {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            margin: 70px 0 40px 0;
+            padding: 0 100px;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            top: 50%;
+            left: 120px;
+            right: 120px;
+            height: 6px;
+            background: #cbd5e1;
+            z-index: 0;
+            transform: translateY(-50%);
+        }
+        
+        .timeline-node {
+            background: #fff;
+            border: 5px solid #1e3a8a;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            z-index: 1;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-node:hover, .timeline-node.active { 
+            background: #b45309; 
+            border-color: #fff; 
+            transform: scale(1.25); 
+            box-shadow: 0 0 20px rgba(180, 83, 9, 0.5); 
+        }
+        
+        .node-label { 
+            position: absolute; 
+            top: -45px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            font-weight: bold; 
+            font-family: 'Poppins', sans-serif; 
+            color: #1e3a8a; 
+            white-space: nowrap; 
+            font-size: 20px;
+        }
+
+        /* ================= DISTRIBUCIÓN EN REJILLA E IMÁGENES ================= */
+        .grid-2 { 
+            display: grid; 
+            grid-template-columns: 1.1fr 0.9fr; 
+            gap: 50px; 
+            align-items: start; 
+            flex-grow: 1; 
+        }
+        
+        .image-box { 
+            border-radius: 16px; 
+            overflow: hidden; 
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15); 
+            height: 440px; 
+            border: 6px solid #fff; 
+            background: #cbd5e1;
+        }
+        
+        .image-box img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+        }
+
+        /* ================= CITAS Y RÚBRICA ================= */
+        .speaker-tag { 
+            position: absolute; 
+            top: 30px; 
+            right: 40px; 
+            background: #1e3a8a; 
+            color: white; 
+            padding: 6px 18px; 
+            border-radius: 20px; 
+            font-size: 14px; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            z-index: 10;
+        }
+        
+        .badge-activity { background: #b45309; }
+
+        .citation { 
+            background: #f1f5f9; 
+            border-left: 6px solid #3b82f6; 
+            padding: 20px; 
+            font-style: italic; 
+            margin-top: 15px; 
+            font-size: 19px; 
+            border-radius: 0 12px 12px 0;
+        }
+        
+        .rubric-pill { 
+            background: #dcfce7; 
+            color: #166534; 
+            padding: 4px 12px; 
+            border-radius: 6px; 
+            font-size: 15px; 
+            font-weight: bold; 
+            display: inline-block; 
+            margin-bottom: 10px; 
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* ================= NUEVO MOTOR DINÁMICO DE TRIVIA Y RULETA ================= */
+        .quiz-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .quiz-screen {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .quiz-screen.active {
+            display: flex;
+        }
+
+        /* Estilos de la Caja de la Ruleta */
+        .roulette-container {
+            background: #f8fafc;
+            border: 4px solid #1e3a8a;
+            border-radius: 24px;
+            padding: 30px;
+            text-align: center;
+            width: 600px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            margin-top: 10px;
+        }
+
+        .roulette-display {
+            background: #1e3a8a;
+            color: white;
+            font-size: 32px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #b45309;
+            transition: all 0.1s ease;
+        }
+
+        .roulette-display.spinning {
+            animation: pulseSpin 0.1s infinite alternate;
+            background: #b45309;
+        }
+
+        @keyframes pulseSpin {
+            from { transform: scale(0.98); opacity: 0.9; }
+            to { transform: scale(1.02); opacity: 1; }
+        }
+
+        .quiz-container { 
+            background: #1e1b4b; 
+            color: white; 
+            padding: 35px; 
+            border-radius: 24px; 
+            width: 100%; 
+            text-align: center; 
+            margin-top: 10px;
+            position: relative;
+        }
+        
+        .quiz-question {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            font-family: 'Poppins', sans-serif;
+            padding: 0 40px;
+        }
+        
+        .quiz-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 20px; 
+        }
+        
+        .quiz-opt { 
+            padding: 20px; 
+            border-radius: 14px; 
+            font-size: 20px;
+            font-weight: bold; 
+            cursor: pointer; 
+            border: 3px solid transparent; 
+            text-align: left; 
+            transition: all 0.2s;
+        }
+        
+        .quiz-opt:hover { border-color: #ffffff; transform: translateY(-2px); }
+        .opt-1 { background: #e21b3c; } 
+        .opt-2 { background: #1368ce; } 
+        .opt-3 { background: #d89e00; } 
+        .opt-4 { background: #26890c; }
+
+        .quiz-opt.correct {
+            background: #10b981 !important;
+            border-color: #ffffff !important;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+        }
+
+        .quiz-opt.wrong {
+            background: #ef4444 !important;
+            opacity: 0.3;
+        }
+
+        .quiz-opt.disabled {
+            pointer-events: none;
+        }
+
+        .quiz-header-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .timer-box {
+            background: #ef4444;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feedback-text {
+            font-size: 22px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+            margin-top: 15px;
+            min-height: 36px;
+        }
+
+        .btn-quiz-action {
+            background: #b45309;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 15px rgba(180, 83, 9, 0.3);
+        }
+
+        .btn-quiz-action:hover {
+            background: #d97706;
+            transform: scale(1.05);
+        }
+
+        .btn-next-question {
+            margin-top: 20px;
+            background: #1e3a8a;
+        }
+        .btn-next-question:hover {
+            background: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slide-container">
+        <div class="grid-2">
+            <div>
+                <br>
+                <br>
+                <h1>Política Educativa y <br><span>Transformación Curricular</span></h1>
+                <p style="font-size: 24px; color: #475569; margin-top: 10px;">Estructura pedagógica y análisis de su aplicación real en el sistema educativo costarricense.</p>
+                <div style="margin-top: 40px; color: #1e3a8a; font-weight: bold; font-size: 20px;">
+                </div>
+            </div>
+            <div class="image-box">
+                <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1200&auto=format&fit=cover" alt="Estudiantes en Costa Rica">
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container">
+        <div class="speaker-tag">Expositor 1</div>
+        <h2 class="slide-title">¿De qué estamos hablando exactamente?</h2>
+        <div class="grid-2">
+            <div>
+                <div class="reveal-trigger" onclick="toggleReveal(this)">
+                    <i class="fa-solid fa-chevron-down"></i>
+                    <h3>1. ¿Qué es la Política Educativa?</h3>
+                </div>
+                <div class="reveal-content">
+                    <p style="margin-bottom: 10px;">Es prácticamente la <strong>"gran guía"</strong> del país. Es el documento oficial aprobado por el Consejo Superior de Educación que define el tipo de ciudadano que queremos formar a largo plazo.</p>
+                    <p style="font-size: 18px; font-weight: bold; color: #1e3a8a; margin-bottom: 5px;">Características principales:</p>
+                    <ul style="padding-left: 20px; font-size: 18px; margin-bottom: 15px;">
+                        <li><strong>Es permanente:</strong> Dura muchos años y no cambia cuando entra un nuevo gobierno.</li>
+                        <li><strong>Es una meta de país:</strong> Dicta las leyes y valores obligatorios para todas las escuelas.</li>
+                    </ul>
+                </div>
+
+                <div class="reveal-trigger" onclick="toggleReveal(this)" style="margin-top: 15px;">
+                    <i class="fa-solid fa-chevron-down"></i>
+                    <h3>2. ¿Qué es la Transformación Curricular?</h3>
+                </div>
+                <div class="reveal-content">
+                    <p style="margin-bottom: 10px;">Es la forma de <strong>llevar la teoría a la práctica</strong>. Es actualizar los libros, las materias y las formas de evaluar para dejar atrás el aprendizaje aburrido de memoria y pasar a enseñar habilidades útiles.</p>
+                    <ul style="padding-left: 20px; font-size: 18px; margin-bottom: 15px;">
+                        <li><strong>Es flexible:</strong> Se adapta al entorno y a la realidad de los estudiantes de hoy.</li>
+                        <li><strong>Se centra en el alumno:</strong> El niño aprende haciendo proyectos, resolviendo retos y trabajando en equipo.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="image-box">
+                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=1200&auto=format&fit=cover" alt="Planeamiento y libros">
+            </div>
+        </div>
+        <div class="btn-bulb-fact" onclick="openModal('modal-exp1')"><i class="fa-solid fa-lightbulb"></i></div>
+    </div>
+
+    <div class="slide-container">
+        <div class="speaker-tag">Expositor 1</div>
+        <h2 class="slide-title">¿Por qué importa y qué se gana con esto?</h2>
+        <div style="display: flex; flex-direction: column; gap: 20px; flex-grow: 1; justify-content: center;">
+            <div>
+                <div class="reveal-trigger" onclick="toggleReveal(this)">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <h3>La verdadera importancia de estar alineados</h3>
+                </div>
+                <div class="reveal-content">
+                    <span class="rubric-pill">Criterio Rúbrica: Importancia</span>
+                    <p>Si las leyes del país y lo que pasa dentro de las aulas no avanzan hacia la misma dirección, las propuestas se quedan en un simple papel. Sincronizar ambos elementos es la única forma real de asegurar que todos los niños del país tengan las mismas oportunidades de salir adelante.</p>
+                </div>
+            </div>
+            <div>
+                <div class="reveal-trigger" onclick="toggleReveal(this)">
+                    <i class="fa-solid fa-square-poll-horizontal"></i>
+                    <h3>Beneficios directos para el desarrollo del país</h3>
+                </div>
+                <div class="reveal-content">
+                    <span class="rubric-pill">Criterio Rúbrica: Beneficios</span>
+                    <ul style="padding-left: 20px;">
+                        <li style="margin-bottom: 12px;"><strong>Pensar en lugar de repetir:</strong> Logramos estudiantes capaces de analizar su entorno en vez de personas que solo memorizan para pasar un examen escrito.</li>
+                        <li><strong>Educación con sentido:</strong> Permite que las escuelas cambien rápido y respondan a las tecnologías y problemas de su propia comunidad.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container">
+        <div class="speaker-tag">Expositor 1</div>
+        <h2 class="slide-title">Un ejemplo práctico en la realidad del aula</h2>
+        <div class="grid-2">
+            <div class="image-box">
+                <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=1200&auto=format&fit=cover" alt="Estudiantes en laboratorio práctico">
+            </div>
+            <div>
+                <span class="rubric-pill" style="background-color: #e0f2fe; color: #0369a1;">Caso de Aplicación: "Pensamiento Crítico"</span>
+                <div class="reveal-trigger" onclick="toggleReveal(this)" style="margin-top: 15px;">
+                    <i class="fa-solid fa-file-invoice"></i>
+                    <h3>¿Cómo se redacta en la teoría (Política)?</h3>
+                </div>
+                <div class="reveal-content">
+                    <p>En el papel de la Política Educativa, este concepto se escribe de forma abstracta: <em>"Formar ciudadanos analíticos, reflexivos y conscientes de su entorno"</em>.</p>
+                </div>
+                <div class="reveal-trigger" onclick="toggleReveal(this)" style="margin-top: 15px;">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                    <h3>¿Cómo se vive en la práctica real (Transformación)?</h3>
+                </div>
+                <div class="reveal-content">
+                    <p>En la escuela, esto se vuelve algo real: el docente ya no dicta el libro de Ciencias de memoria. En su lugar, <strong>plantea un problema de basura real de la comunidad</strong>. Los estudiantes investigan las causas por su cuenta, debaten en grupo y proponen ideas para solucionarlo ellos mismos.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container">
+        <div class="speaker-tag">Expositor 1</div>
+        <h2 class="slide-title">Características Clave del Enfoque Actual</h2>
+        <div class="grid-2">
+            <div>
+                <div class="reveal-trigger" onclick="toggleReveal(this)">
+                    <i class="fa-solid fa-seedling"></i>
+                    <h3>Humanista (Eje Central)</h3>
+                </div>
+                <div class="reveal-content">
+                    <span class="rubric-pill">Eje Fundamental</span>
+                    <p>Pone los sentimientos, la ética y los valores de la persona estudiante por encima de todo. Busca que los niños crezcan siendo empáticos, respetuosos y capaces de construir proyectos de vida sanos.</p>
+                </div>
+
+                <div class="reveal-trigger" onclick="toggleReveal(this)" style="margin-top: 15px;">
+                    <i class="fa-solid fa-earth-americas"></i>
+                    <h3>Socio-constructivista y Eco-ciudadano</h3>
+                </div>
+                <div class="reveal-content">
+                    <span class="rubric-pill">Metodología y Entorno</span>
+                    <p><strong>Socio-constructivista:</strong> Reconoce que nadie aprende solo de manera aislada; el conocimiento se construye debatiendo y haciendo cosas en equipo. <br><strong>Eco-ciudadano:</strong> Desarrolla un compromiso activo y urgente por proteger los recursos naturales y el medio ambiente.</p>
+                </div>
+
+                <div class="reveal-trigger" onclick="toggleReveal(this)" style="margin-top: 15px;">
+                    <i class="fa-solid fa-bezier-curve"></i>
+                    <h3>Inclusión y Enfoque de Complejidad</h3>
+                </div>
+                <div class="reveal-content">
+                    <span class="rubric-pill">Visión Global</span>
+                    <p>Entiende que el mundo real no viene dividido en cuadritos o materias separadas, sino que todo está conectado. Además, asegura que las clases se adapten para incluir a todos los niños, independientemente de sus retos o condiciones.</p>
+                </div>
+            </div>
+            <div class="image-box">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=cover" alt="Estudiantes colaborando en equipo">
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container">
+        <div class="speaker-tag">Expositor 2</div>
+        <h2 class="slide-title">¿Cómo hemos cambiado a lo largo del tiempo?</h2>
+        <div class="grid-2">
+            <div>
+                <div class="citation" style="background-color: #fef3c7; border-left-color: #d97706; color: #451a03; font-style: normal;">
+                </div>
+                <p style="margin-top: 25px; font-size: 22px;">Las formas de enseñar en Costa Rica han ido cambiando por épocas para intentar dar respuestas a las necesidades de cada momento histórico del país.</p>
+            </div>
+            <div class="image-box">
+                <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1200&auto=format&fit=cover" alt="Pizarra y aula escolar antigua">
+            </div>
+        </div>
+        <div class="btn-bulb-fact" onclick="openModal('modal-exp2')"><i class="fa-solid fa-lightbulb"></i></div>
+    </div>
+
+    <div class="slide-container">
+        <div class="speaker-tag">Expositor 2</div>
+        <h2 class="slide-title">2. Evolución Histórica de las Reformas</h2>
+        <p style="font-size: 19px; color: #64748b; text-align: center;"><i class="fa-solid fa-hand-pointer"></i> Presione las pestañas interactivas de la línea para examinar la progresión cronológica:</p>
+        
+        <div class="timeline-viz">
+            <div class="timeline-line"></div>
+            <div class="timeline-node active" onclick="showTime(0, this)">
+                <span class="node-label">Década de 1990</span>
+            </div>
+            <div class="timeline-node" onclick="showTime(1, this)">
+                <span class="node-label">2014 - 2018</span>
+            </div>
+            <div class="timeline-node" onclick="showTime(2, this)">
+                <span class="node-label">Tendencias Actuales</span>
+            </div>
+        </div>
+
+        <div id="time-content-area" style="background: #f8fafc; padding: 30px; border-radius: 16px; border: 1px solid #e2e8f0; min-height: 250px; display: flex; flex-direction: column; justify-content: center;">
+            <h3 id="time-title" style="color: #b45309; font-size: 24px;">Década de 1990 - Materias Separadas y Memorización</h3>
+            <p id="time-desc" style="margin-top: 10px; font-size: 20px;">En esta época el foco era modernizar los contenidos de los libros y lograr que más niños entraran a las escuelas. Las clases se basaban en aprender temas de forma lineal, aislada y super memorística, usando exámenes tradicionales como única regla de medición.</p>
+            <div class="citation" id="time-cite">
+                "El currículo de finales del siglo XX mantuvo una marcada fragmentación disciplinar, limitando el desarrollo de competencias de pensamiento complejo y sistémico."
+                <span style="display:block; text-align:right; font-weight:bold; font-style:normal; color:#1e3a8a; margin-top:5px;">— Programa Estado de la Nación (2011, p. 85)</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container">
+        <div class="speaker-tag">Expositor 3</div>
+        <h2 class="slide-title">La Realidad en Cifras: El gran desafío práctico</h2>
+        <div class="grid-2">
+            <div class="image-box">
+                <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1200&auto=format&fit=cover" alt="Análisis de métricas y datos">
+            </div>
+            <div>
+                <div class="reveal-trigger" onclick="toggleReveal(this)">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <h3>El gran abismo entre el papel y las aulas</h3>
+                </div>
+                <div class="reveal-content">
+                    <p>Aunque los documentos y planes del MEP son modernos e increíbles en teoría, los informes del país revelan que cuesta muchísimo aplicarlos al 100% en todas las escuelas debido a problemas de internet, falta de recursos y baches académicos heredados.</p>
+                    <div class="citation">
+                        "El verdadero desafío del sistema no se agota en la formulación de planes de estudio óptimos; reside en la deconstrucción y transformación real de las metodologías de aula implementadas por el cuerpo docente."
+                        <span style="display:block; text-align:right; font-weight:bold; font-style:normal; color:#1e3a8a; margin-top:5px;">— Programa Estado de la Nación (2023, p. 42)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-bulb-fact" onclick="openModal('modal-exp3')"><i class="fa-solid fa-lightbulb"></i></div>
+    </div>
+
+    <div class="slide-container">
+        <div class="speaker-tag">Expositor 3</div>
+        <h2 class="slide-title">Propuestas concretas para mitigar el rezago</h2>
+        <div style="display: flex; flex-direction: column; gap: 15px; flex-grow: 1; justify-content: center;">
+            <div>
+                <div class="reveal-trigger" onclick="toggleReveal(this)">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <h3>1. Transformar la Formación Universitaria</h3>
+                </div>
+                <div class="reveal-content">
+                    <p>Cambiar los planes de estudio en las universidades que forman maestros, para que los futuros docentes aprendan técnicas de enseñanza prácticas, dinámicas e interactivas en vez de solo teoría de folletos viejos.</p>
+                </div>
+            </div>
+            <div>
+                <div class="reveal-trigger" onclick="toggleReveal(this)">
+                    <i class="fa-solid fa-wheelchair-move"></i>
+                    <h3>2. Inclusión Plena mediante el Enfoque DUA</h3>
+                </div>
+                <div class="reveal-content">
+                    <p>Capacitar a fondo en el Diseño Universal para el Aprendizaje (DUA). Esto es crear materiales pensando en que todos los niños aprenden a ritmos diferentes, asegurando que nadie se quede atrás por barreras en el aula.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container">
+        <div class="speaker-tag">Expositor 4</div>
+        <h2 class="slide-title">Neuroeducación: ¿Cómo procesa el cerebro la información?</h2>
+        <div class="grid-2">
+            <div>
+                <div class="reveal-trigger" onclick="toggleReveal(this)">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                    <h3>El binomio Emoción - Cognición</h3>
+                </div>
+                <div class="reveal-content">
+                    <p>La ciencia demuestra que el cerebro necesita un ambiente seguro y sin miedo para poder guardar información. El estrés bloquea la memoria. <strong>Solo podemos aprender aquello que nos despierta emociones positivas, curiosidad y alegría.</strong></p>
+                </div>
+                <div class="reveal-trigger" onclick="toggleReveal(this)" style="margin-top: 15px;">
+                    <i class="fa-solid fa-brain"></i>
+                    <h3>Circuitos de recompensa y atención sostenida</h3>
+                </div>
+                <div class="reveal-content">
+                    <p>Los juegos en clase despiertan la motivación natural y la curiosidad. Como la atención continua de un niño de escuela dura como máximo de 15 a 20 minutos, la clase aburrida donde solo habla el profesor es ineficiente para el cerebro.</p>
+                </div>
+            </div>
+            <div class="image-box">
+                <img src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?q=80&w=1200&auto=format&fit=cover" alt="Cerebro y ciencia del aprendizaje">
+            </div>
+        </div>
+        <div class="btn-bulb-fact" onclick="openModal('modal-exp4')"><i class="fa-solid fa-lightbulb"></i></div>
+    </div>
+
+    <div class="slide-container">
+        <div class="speaker-tag">Expositor 4</div>
+        <h2 class="slide-title">El perfil del docente de cara al Siglo XXI</h2>
+        <div class="grid-2">
+            <div class="image-box">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=cover" alt="Mediador tecnológico">
+            </div>
+            <div>
+                <div class="reveal-trigger" onclick="toggleReveal(this)">
+                    <i class="fa-solid fa-signs-post"></i>
+                    <h3>Dejar de transmitir para empezar a guiar</h3>
+                </div>
+                <div class="reveal-content">
+                    <p>Toda la información ya está en internet. Por eso, el maestro actual ya no es la única fuente de datos. Su verdadero rol es ser un <strong>guía del camino</strong> que diseña actividades divertidas y enseña a usar la tecnología con propósito y empatía.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container">
+        <div class="speaker-tag badge-activity">Actividad Colectiva</div>
+        <h2 class="slide-title">Espacio de Diálogo Abierto</h2>
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center;">
+            <div style="background: #fdf2e9; border: 4px dashed #b45309; padding: 50px; border-radius: 30px; max-width: 950px; box-shadow: 0 10px 25px rgba(180,83,9,0.05);">
+                <p style="font-size: 34px; font-weight: bold; color: #b45309; line-height: 1.4;">"De los cambios educativos comentados hoy, ¿cuál consideran que es el que más urge aplicar en las escuelas de Costa Rica?"</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container">
+        <div class="speaker-tag badge-activity">Comprobación</div>
+        <h2 class="slide-title">Ruleta Interectiva</h2>
+        
+        <div class="quiz-wrapper">
+            <div id="quiz-start-screen" class="quiz-screen active">
+                <p style="font-size: 26px; margin-bottom: 30px; text-align: center; max-width: 800px;">
+                    instrucciones...
+                 </p>
+                <button class="btn-quiz-action" onclick="startQuizGame()">¡Comenzar Trivia!</button>
+            </div>
+
+            <div id="quiz-roulette-screen" class="quiz-screen">
+                <h3 style="font-size: 32px; color: #1e3a8a; margin-bottom: 15px;"><i class="fa-solid fa-circle-notch fa-spin"></i> Selección de Participante</h3>
+                <p style="font-size: 20px; margin-bottom: 20px; color: #475569;">Girando la ruleta para asignar la siguiente pregunta...</p>
+                
+                <div class="roulette-container">
+                    <div id="roulette-box" class="roulette-display">¿Quién será?</div>
+                    <button id="btn-spin" class="btn-quiz-action" onclick="spinRoulette()">Girar Ruleta</button>
+                    <button id="btn-goToQuestion" class="btn-quiz-action" style="display: none; background: #26890c;" onclick="goToQuestionNow()">Ver Pregunta <i class="fa-solid fa-bolt"></i></button>
+                </div>
+            </div>
+
+            <div id="quiz-game-screen" class="quiz-screen">
+                <div class="quiz-header-meta">
+                    <p id="quiz-progress" style="font-size: 22px; font-weight: bold; color: #1e3a8a;"></p>
+                    <div id="student-assigned-badge" style="background: #1e3a8a; color: white; padding: 10px 20px; border-radius: 20px; font-size: 20px; font-weight: bold;"></div>
+                    <div class="timer-box">
+                        <i class="fa-solid fa-clock"></i> <span id="quiz-timer">20</span>s
+                    </div>
+                </div>
+
+                <div class="quiz-container">
+                    <p class="quiz-question" id="quiz-question-text">Pregunta</p>
+                    <div class="quiz-grid" id="quiz-options-grid"></div>
+                </div>
+
+                <p id="quiz-feedback" class="feedback-text"></p>
+                
+                <button id="quiz-next-btn" class="btn-quiz-action btn-next-question" style="display: none;" onclick="prepareNextRound()">Siguiente Ronda <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+
+            <div id="quiz-results-screen" class="quiz-screen">
+                <h3 style="font-size: 45px; color: #10b981; margin-bottom: 20px;"><i class="fa-solid fa-trophy"></i> ¡Trivia Completada!</h3>
+                <p id="quiz-score-text" style="font-size: 28px; margin-bottom: 30px; font-weight: bold;"></p>
+                <button class="btn-quiz-action" onclick="resetQuizGame()">Reiniciar Todo</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container">
+        <h2 class="slide-title">Referencias Académicas</h2>
+        <div style="font-size: 19px; color: #475569; line-height: 1.8; display: flex; flex-direction: column; justify-content: center; flex-grow: 1;">
+            <p style="margin-bottom: 12px;">• Consejo Superior de Educación. (2017). <i>Política Educativa: La persona: centro del proceso educativo y sujeto de transformación social</i>. San José, Costa Rica.</p>
+            <p style="margin-bottom: 12px;">• Ministerio de Educación Pública. (2015). <i>Educar para una nueva ciudadanía: Fundamentación pedagógica de la transformación curricular</i>. Despacho de la Ministra.</p>
+            <p style="margin-bottom: 12px;">• Mora, F. (2017). <i>Neuroeducación: Solo se puede aprender aquello que se ama</i> (2.ª ed.). Alianza Editorial.</p>
+            <p style="margin-bottom: 12px;">• Programa Estado de la Nación. (2011). <i>IV Informe Estado de la Educación</i>. San José: Servicios Gráficos del ACAN.</p>
+            <p style="margin-bottom: 12px;">• Programa Estado de la Nación. (2023). <i>X Informe Estado de la Educación</i>. Consejo Nacional de Rectores (CONARE).</p>
+        </div>
+    </div>
+
+    <div id="modal-exp1" class="fact-modal">
+        <div class="fact-modal-content">
+            <span class="fact-modal-close" onclick="closeModal('modal-exp1')">&times;</span>
+            <h3 style="color: #b45309; font-size: 28px; margin-bottom: 15px;"><i class="fa-solid fa-lightbulb"></i> ¿Sabías que...? (Expositor 1)</h3>
+            <p>Nuestra Constitución Política estipula de forma estricta y obligatoria el financiamiento macro de la educación pública costarricense, garantizando que sea una de las prioridades legales y presupuestarias del Estado para asegurar la permanencia del sistema.</p>
+        </div>
+    </div>
+
+    <div id="modal-exp2" class="fact-modal">
+        <div class="fact-modal-content">
+            <span class="fact-modal-close" onclick="closeModal('modal-exp2')">&times;</span>
+            <h3 style="color: #b45309; font-size: 28px; margin-bottom: 15px;"><i class="fa-solid fa-lightbulb"></i> ¿Sabías que...? (Expositor 2)</h3>
+            <p>La famosa reforma hacia la <em>"Educación para una Nueva Ciudadanía"</em> (periodo 2014-2018) sustituyó por completo los viejos objetivos memorísticos lineales por un plan basado en 4 grandes ejes de competencias transversales para toda la vida.</p>
+        </div>
+    </div>
+
+    <div id="modal-exp3" class="fact-modal">
+        <div class="fact-modal-content">
+            <span class="fact-modal-close" onclick="closeModal('modal-exp3')">&times;</span>
+            <h3 style="color: #b45309; font-size: 28px; margin-bottom: 15px;"><i class="fa-solid fa-lightbulb"></i> ¿Sabías que...? (Expositor 3)</h3>
+            <p>El Informe del Estado de la Educación recalca que el verdadero cuello de botella para modernizar las aulas no son los documentos curriculares del MEP, sino capacitar y deconstruir los métodos lineales tradicionales que el cuerpo docente aplica en el día a día.</p>
+        </div>
+    </div>
+
+    <div id="modal-exp4" class="fact-modal">
+        <div class="fact-modal-content">
+            <span class="fact-modal-close" onclick="closeModal('modal-exp4')">&times;</span>
+            <h3 style="color: #b45309; font-size: 28px; margin-bottom: 15px;"><i class="fa-solid fa-lightbulb"></i> ¿Sabías que...? (Expositor 4)</h3>
+            <p>El cerebro infantil segrega dosis masivas de cortisol bajo estrés o aburrimiento lineal, bloqueando los hipocampos encargados de almacenar datos estables. Solo los estímulos lúdicos y con carga emocional positiva abren la plasticidad cognitiva.</p>
+        </div>
+    </div>
+
+    <script>
+        // ================= SCRIPTS EXISTENTES SIN REESCRIBIR =================
+        function toggleReveal(trigger) {
+            trigger.classList.toggle('active');
+            const content = trigger.nextElementSibling;
+            content.classList.toggle('active');
+        }
+
+        const timelineData = [
+            {
+                title: "Década de 1990 - Materias Separadas y Memorización",
+                desc: "En esta época el foco era modernizar los contenidos de los libros y lograr que más niños entraran a las escuelas. Las clases se basaban en aprender temas de forma lineal, aislada y super memorística, usando exámenes tradicionales como única regla de medición.",
+                cite: `"El currículo de finales del siglo XX mantuvo una marcada fragmentación disciplinar, limitando el desarrollo de competencias de pensamiento complejo y sistémico." <span style="display:block; text-align:right; font-weight:bold; font-style:normal; color:#1e3a8a; margin-top:5px;">— Programa Estado de la Nación (2011, p. 85)</span>`
+            },
+            {
+                title: "Periodo 2014 - 2018 - Educar para una Nueva Ciudadanía",
+                desc: "Se rompe formalmente con las clases de repetir y copiar de la pizarra. Se crean programas oficiales enfocados en que el estudiante aprenda habilidades útiles divididas en 4 grandes áreas para enfrentar el mundo global de hoy.",
+                cite: `"La reforma curricular impulsó el diseño de perfiles de salida basados en habilidades, transformando la planificación operativa del aula." <span style="display:block; text-align:right; font-weight:bold; font-style:normal; color:#1e3a8a; margin-top:5px;">— Ministerio de Educación Pública (2015, p. 12)</span>`
+            },
+            {
+                title: "Tendencias Actuales - Inclusión Mediante DUA y Nivelación",
+                desc: "Estrategias flexibles y dinámicas para recuperar el tiempo perdido por los cierres de escuelas. Se vuelve obligatorio el uso del Diseño Universal para el Aprendizaje (DUA) para respetar los ritmos de cada niño, la tecnología con propósito y el cuidado de las emociones.",
+                cite: `"Los marcos pedagógicos contemporáneos exigen la creación de entornos dinámicos que reconozcan las necesidades diversas de toda la población estudiantil." <span style="display:block; text-align:right; font-weight:bold; font-style:normal; color:#1e3a8a; margin-top:5px;">— UNESCO (2021, p. 34)</span>`
+            }
+        ];
+
+        function showTime(index, node) {
+            document.querySelectorAll('.timeline-node').forEach(n => n.classList.remove('active'));
+            node.classList.add('active');
+            document.getElementById('time-title').innerHTML = timelineData[index].title;
+            document.getElementById('time-desc').innerHTML = timelineData[index].desc;
+            document.getElementById('time-cite').innerHTML = timelineData[index].cite;
+        }
+
+        // CONTROL DE VENTANAS EMERGENTES (MODALES)
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        // ================= NUEVO MOTOR TOTAL: RULETA CON ELIMINACIÓN Y 6 PREGUNTAS =================
+        // Lista exacta de alumnos proporcionada en tus imágenes
+        const initialStudentsList = [
+            "Bayron Herrera", "Fabiola Sharpe", "Onixsa Downs",
+            "Valeria Mendoza", "Mariela Molina", "Kimberline López",
+            "Kristel Davis", "Adriana Reyes", "Keilyn Cortés",
+            "Diana Mora", "Samantha Mendoza", "Mariana Guevara",
+            "Arielka Arias", "Witney González", "Nicksel Soto"
+        ];
+        
+        let studentsPool = [...initialStudentsList];
+        let chosenStudent = "";
+
+        // Banco expandido a 6 preguntas estratégicas
+        const quizQuestions = [
+            {
+                question: "¿Quién es el centro absoluto de todo el proceso de enseñanza según las nuevas políticas de Costa Rica?",
+                options: [
+                    { text: "▲ A. El Ministerio de Educación", correct: false, msg: "El MEP es el ente regulador macro, no el eje del aula." },
+                    { text: "■ B. La Persona Estudiante", correct: true, msg: "¡Excelente! Es el eje central y el sujeto de transformación." },
+                    { text: "◆ C. Los Libros de Texto Básicos", correct: false, msg: "Los libros son recursos secundarios de apoyo." },
+                    { text: "● D. Los Exámenes Tradicionales", correct: false, msg: "La evaluación tradicional hoy va en decremento." }
+                ]
+            },
+            {
+                question: "¿Cuál es la característica principal de la estabilidad de la Política Educativa?",
+                options: [
+                    { text: "▲ A. Cambia cada vez que entra un nuevo gobierno", correct: false, msg: "¡Al contrario! Se busca que sea una meta estable a largo plazo." },
+                    { text: "■ B. Es una directriz flexible creada por cada profesor", correct: false, msg: "La directriz del docente es el planeamiento, no la política macro." },
+                    { text: "◆ C. Es permanente, dictada por el Consejo Superior de Educación", correct: true, msg: "¡Exacto! Es el marco jurídico que define el norte del país." },
+                    { text: "● D. Se aplica únicamente en colegios técnicos públicos", correct: false, msg: "Es obligatoria a nivel país para todo el sistema." }
+                ]
+            },
+            {
+                question: "Según la neuroeducación, ¿qué elemento biológico bloquea las áreas de la memoria en el alumno?",
+                options: [
+                    { text: "▲ A. La curiosidad espontánea", correct: false, msg: "La curiosidad activa la dopamina y abre la atención." },
+                    { text: "■ B. El miedo y el estrés (Liberación de cortisol)", correct: true, msg: "¡Brillante! El cerebro asustado se defiende y bloquea el aprendizaje." },
+                    { text: "◆ C. Las dinámicas de juegos interactivos", correct: false, msg: "El juego relaja y estimula el aprendizaje significativo." },
+                    { text: "● D. Dormir las horas completas por la noche", correct: false, msg: "El sueño repara y consolida la memoria a largo plazo." }
+                ]
+            },
+            {
+                question: "¿Qué cambio metodológico sustenta al paradigma Socio-constructivista actual?",
+                options: [
+                    { text: "▲ A. Transmitir datos puros mediante dictados diarios extensos", correct: false, msg: "Eso corresponde a la pedagogía tradicionalista de memoria." },
+                    { text: "■ B. Construir el conocimiento de forma colectiva y en proyectos", correct: true, msg: "¡Correcto! El conocimiento es el resultado de la interacción social." },
+                    { text: "◆ C. El uso exclusivo de computadoras sin guía docente", correct: false, msg: "La tecnología sin propósito e instrucción clara carece de valor." },
+                    { text: "● D. Eliminar por completo el trabajo en equipo del aula", correct: false, msg: "El trabajo colaborativo es vital en el socio-constructivismo." }
+                ]
+            },
+            {
+                question: "¿Qué busca asegurar el Diseño Universal para el Aprendizaje (DUA) de forma obligatoria?",
+                options: [
+                    { text: "▲ A. Que todos respondan idéntico el mismo examen de folleto", correct: false, msg: "El DUA rompe el esquema rígido de evaluación uniforme." },
+                    { text: "■ B. Derribar barreras adaptando la clase a los ritmos de cada alumno", correct: true, msg: "¡Brillante! Da múltiples formas de motivación, representación y acción." },
+                    { text: "◆ C. Comprar tabletas de alta gama para todas las instituciones", correct: false, msg: "El DUA es una estrategia pedagógica, no un hardware tecnológico." },
+                    { text: "● D. Reducir el contenido curricular a la mitad de su extensión", correct: false, msg: "No disminuye el rigor, flexibiliza las vías de acceso a él." }
+                ]
+            },
+            {
+                question: "De acuerdo con los Informes de la Nación, ¿dónde radica el reto crítico de la transformación curricular?",
+                options: [
+                    { text: "▲ A. En imprimir folletos educativos de mayor grosor", correct: false, msg: "Los materiales impresos no transforman de por sí la mediación." },
+                    { text: "■ B. En modificar las prácticas de aula reales ejecutadas por el docente", correct: true, msg: "¡Exacto! El reto no es el documento ideal, sino deconstruir la práctica tradicional." },
+                    { text: "◆ C. En aumentar el número de exámenes escritos obligatorios", correct: false, msg: "Las métricas tradicionales no resuelven la deconstrucción metodológica." },
+                    { text: "● D. En suspender el uso de portafolios de evidencias", correct: false, msg: "Los portafolios son recursos evaluativos alternos útiles." }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval = null;
+        let timeLeft = 20;
+        let questionAnswered = false;
+
+        function startQuizGame() {
+            document.getElementById('quiz-start-screen').classList.remove('active');
+            studentsPool = [...initialStudentsList]; // Reiniciar base de nombres
+            currentQuestionIndex = 0;
+            score = 0;
+            showRouletteScreen();
+        }
+
+        // Pantalla de Ruleta
+        function showRouletteScreen() {
+            document.getElementById('quiz-game-screen').classList.remove('active');
+            document.getElementById('quiz-roulette-screen').classList.add('active');
+            document.getElementById('roulette-box').innerText = "¿Quién responde?";
+            document.getElementById('btn-spin').style.display = "inline-block";
+            document.getElementById('btn-goToQuestion').style.display = "none";
+        }
+
+        // Lógica de Giro Animado de la Ruleta
+        function spinRoulette() {
+            if (studentsPool.length === 0) {
+                studentsPool = [...initialStudentsList]; // Si se acaban, recarga la lista
+            }
+
+            const rouletteBox = document.getElementById('roulette-box');
+            const btnSpin = document.getElementById('btn-spin');
+            rouletteBox.classList.add('spinning');
+            btnSpin.style.pointerEvents = "none";
+
+            let spinTicks = 0;
+            let currentIntervalTime = 50;
+
+            function runTick() {
+                // Selecciona un nombre rápido provisional para el efecto visual
+                let tempIdx = Math.floor(Math.random() * studentsPool.length);
+                rouletteBox.innerText = studentsPool[tempIdx];
+                spinTicks++;
+
+                if (spinTicks < 30) {
+                    setTimeout(runTick, currentIntervalTime);
+                } else {
+                    // Fin del giro: Selección real
+                    rouletteBox.classList.remove('spinning');
+                    let finalIdx = Math.floor(Math.random() * studentsPool.length);
+                    chosenStudent = studentsPool[finalIdx];
+                    
+                    // Mostrar el ganador definitivo
+                    rouletteBox.innerText = `🎯 ¡${chosenStudent}!`;
+                    
+                    // ELIMINACIÓN CRUCIAL: Sacar al seleccionado del pool activo para evitar repetición
+                    studentsPool.splice(finalIdx, 1);
+
+                    // Habilitar el paso a la pregunta
+                    btnSpin.style.pointerEvents = "auto";
+                    btnSpin.style.display = "none";
+                    document.getElementById('btn-goToQuestion').style.style = "inline-block";
+                    document.getElementById('btn-goToQuestion').style.display = "inline-block";
+                }
+            }
+            runTick();
+        }
+
+        // Transición de la ruleta a la visualización de la pregunta asignada
+        function goToQuestionNow() {
+            document.getElementById('quiz-roulette-screen').classList.remove('active');
+            document.getElementById('quiz-game-screen').classList.add('active');
+            loadQuestion();
+        }
+
+        // Inyección de contenido de la pregunta y arranque del cronómetro
+        function loadQuestion() {
+            questionAnswered = false;
+            clearInterval(timerInterval);
+            timeLeft = 20;
+            document.getElementById('quiz-timer').innerText = timeLeft;
+            document.getElementById('quiz-feedback').innerText = "";
+            document.getElementById('quiz-feedback').style.color = "white";
+            document.getElementById('quiz-next-btn').style.display = "none";
+
+            // Mostrar el nombre del seleccionado en la interfaz
+            document.getElementById('student-assigned-badge').innerHTML = `<i class="fa-solid fa-user"></i> Turno de: ${chosenStudent}`;
+
+            const currentQuestion = quizQuestions[currentQuestionIndex];
+            document.getElementById('quiz-progress').innerText = `Pregunta ${currentQuestionIndex + 1} de ${quizQuestions.length}`;
+            document.getElementById('quiz-question-text').innerText = currentQuestion.question;
+
+            const optionsGrid = document.getElementById('quiz-options-grid');
+            optionsGrid.innerHTML = "";
+
+            currentQuestion.options.forEach((opt, index) => {
+                const optButton = document.createElement('div');
+                optButton.className = `quiz-opt opt-${index + 1}`;
+                optButton.innerText = opt.text;
+                optButton.onclick = () => selectOption(optButton, opt);
+                optionsGrid.appendChild(optButton);
+            });
+
+            startTimer();
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('quiz-timer').innerText = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timeOutLoss();
+                }
+            }, 1000);
+        }
+
+        function timeOutLoss() {
+            questionAnswered = true;
+            disableAllOptions();
+            document.getElementById('quiz-feedback').innerText = "⏱️ ¡Se agotó el tiempo reglamentario!";
+            document.getElementById('quiz-feedback').style.color = "#ef4444";
+            highlightCorrectAnswer();
+            document.getElementById('quiz-next-btn').style.display = "block";
+        }
+
+        function selectOption(selectedElement, optionObj) {
+            if (questionAnswered) return;
+            questionAnswered = true;
+            clearInterval(timerInterval);
+            disableAllOptions();
+
+            const feedbackEl = document.getElementById('quiz-feedback');
+
+            if (optionObj.correct) {
+                selectedElement.classList.add('correct');
+                feedbackEl.innerText = optionObj.msg;
+                feedbackEl.style.color = "#10b981";
+                score++;
+            } else {
+                selectedElement.classList.add('wrong');
+                feedbackEl.innerText = optionObj.msg;
+                feedbackEl.style.color = "#ef4444";
+                highlightCorrectAnswer();
+            }
+
+            document.getElementById('quiz-next-btn').style.display = "block";
+        }
+
+        function disableAllOptions() {
+            document.querySelectorAll('.quiz-opt').forEach(btn => {
+                btn.classList.add('disabled');
+            });
+        }
+
+        function highlightCorrectAnswer() {
+            const currentQuestion = quizQuestions[currentQuestionIndex];
+            const correctIndex = currentQuestion.options.findIndex(o => o.correct);
+            const optionButtons = document.querySelectorAll('.quiz-opt');
+            if (optionButtons[correctIndex]) {
+                optionButtons[correctIndex].classList.add('correct');
+            }
+        }
+
+        function prepareNextRound() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizQuestions.length) {
+                showRouletteScreen(); // Vuelve a la ruleta para la siguiente pregunta
+            } else {
+                showFinalResults();
+            }
+        }
+
+        function showFinalResults() {
+            document.getElementById('quiz-game-screen').classList.remove('active');
+            document.getElementById('quiz-results-screen').classList.add('active');
+            document.getElementById('quiz-score-text').innerText = `Trivia finalizada. Puntuación grupal lograda: ${score} de ${quizQuestions.length} respuestas correctas.`;
+        }
+
+        function resetQuizGame() {
+            document.getElementById('quiz-results-screen').classList.remove('active');
+            document.getElementById('quiz-start-screen').classList.add('active');
+        }
+    </script>
+</body>
+</html>
