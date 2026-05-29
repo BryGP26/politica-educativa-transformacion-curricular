@@ -23,11 +23,12 @@
             align-items: center; 
             gap: 60px; 
             padding: 60px 20px; 
+            font-family: 'Lato', sans-serif;
         }
 
         .slide-container {
             background-color: #ffffff;
-            border-radius: 20px;
+            border-radius: 24px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             width: 1280px;
             max-width: 95%;
@@ -37,25 +38,71 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            overflow: visible;
-            font-family: 'Lato', sans-serif;
+            overflow: hidden;
             border: 1px solid #d1d5db;
         }
 
-        /* ================= ERGONOMÍA VISUAL Y TÍTULOS AMIGABLES ================= */
+        /* ================= DISEÑO DE BANNER (PRIMERA SLIDE) ================= */
+        .intro-slide { 
+            padding: 0; 
+        }
+
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 720px;
+            background: #1e3a8a;
+            cursor: pointer;
+        }
+
+        .hero-banner iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            filter: brightness(0.65);
+            pointer-events: none; /* Permite hacer clic en todo el banner para ampliar */
+        }
+
+        .banner-content {
+            position: absolute;
+            top: 50%;
+            left: 70px;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 50px 60px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            max-width: 800px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            pointer-events: auto;
+        }
+
+        .banner-content h1 { 
+            color: #ffffff; 
+            font-size: 62px; 
+            line-height: 1.1;
+            font-family: 'Poppins', sans-serif;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.4); 
+        }
+        
+        .banner-content h1 span { 
+            color: #f59e0b; 
+        }
+        
+        .banner-content p { 
+            color: #f1f5f9; 
+            font-size: 24px; 
+            margin-top: 20px; 
+            line-height: 1.4; 
+            text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        /* ================= ERGONOMÍA VISUAL Y TÍTULOS ================= */
         h1, h2, h3 { 
             color: #1e3a8a; 
             font-family: 'Poppins', sans-serif; 
-        }
-        
-        h1 { 
-            font-size: 58px; 
-            line-height: 1.1; 
-            margin-bottom: 20px; 
-        }
-        
-        h1 span { 
-            color: #b45309; 
         }
         
         .slide-title { 
@@ -72,7 +119,122 @@
             color: #334155; 
         }
 
-        /* ================= BOTÓN INTERACTIVO SABÍAS QUE (BOMBILLO) ================= */
+        /* ================= VENTANA EMERGENTE MULTIMEDIA (LIGHTBOX) ================= */
+        .lightbox-overlay {
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background: rgba(0, 0, 0, 0.93); 
+            z-index: 2000; 
+            justify-content: center;
+            align-items: center; 
+            backdrop-filter: blur(8px);
+        }
+        
+        .lightbox-overlay.active { 
+            display: flex; 
+        }
+        
+        .lightbox-content-wrapper { 
+            position: relative; 
+            max-width: 90%; 
+            max-height: 85%; 
+            animation: zoomIn 0.25s ease-out; 
+        }
+        
+        @keyframes zoomIn { 
+            from { transform: scale(0.9); opacity: 0; } 
+            to { transform: scale(1); opacity: 1; } 
+        }
+        
+        .lightbox-content-wrapper img { 
+            max-width: 100%; 
+            max-height: 85vh; 
+            border-radius: 12px; 
+            box-shadow: 0 0 30px rgba(255,255,255,0.1);
+            object-fit: contain;
+        }
+        
+        .lightbox-content-wrapper iframe { 
+            width: 80vw; 
+            height: 45vw; 
+            max-width: 1100px; 
+            max-height: 620px; 
+            border: none;
+            background: #ffffff; 
+            border-radius: 12px; 
+            box-shadow: 0 0 30px rgba(255,255,255,0.2); 
+        }
+        
+        .lightbox-close { 
+            position: absolute; 
+            top: -55px; 
+            right: 0; 
+            color: #ffffff; 
+            font-size: 38px; 
+            cursor: pointer; 
+            background: none;
+            border: none;
+            transition: color 0.2s;
+        }
+        
+        .lightbox-close:hover { 
+            color: #ef4444; 
+        }
+
+        /* Contenedor de imagen estándar */
+        .image-box { 
+            border-radius: 16px; 
+            overflow: hidden; 
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15); 
+            height: 440px; 
+            border: 6px solid #fff; 
+            background: #cbd5e1;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .image-box:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(30, 58, 138, 0.25);
+        }
+
+        .image-box::after {
+            content: "\f00e";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(30, 58, 138, 0.85);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .image-box:hover::after {
+            opacity: 1;
+        }
+        
+        .image-box img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+        }
+
+        /* ================= CONTROL DE BOMBILLOS DE CONTEXTO ================= */
         .btn-bulb-fact {
             position: absolute;
             bottom: 30px;
@@ -104,7 +266,6 @@
             100% { box-shadow: 0 0 0 0 rgba(217, 119, 6, 0); }
         }
 
-        /* Ventana Emergente (Modal) */
         .fact-modal {
             display: none;
             position: fixed;
@@ -149,7 +310,7 @@
             cursor: pointer;
         }
 
-        /* ================= SISTEMA DE EXPOSICIÓN GUIADA (REVEAL) ================= */
+        /* ================= SISTEMA DE REVEAL EXPOSICIÓN GUIADA ================= */
         .reveal-trigger {
             cursor: pointer;
             background: #f8fafc;
@@ -193,7 +354,7 @@
             opacity: 1; 
         }
 
-        /* ================= LÍNEA DE TIEMPO INTERACTIVA HORIZONTAL ================= */
+        /* ================= LÍNEA DE TIEMPO INTERACTIVA ================= */
         .timeline-viz {
             display: flex;
             align-items: center;
@@ -245,7 +406,7 @@
             font-size: 20px;
         }
 
-        /* ================= DISTRIBUCIÓN EN REJILLA E IMÁGENES ================= */
+        /* ================= REJILLAS Y COMPONENTES VISUALES ================= */
         .grid-2 { 
             display: grid; 
             grid-template-columns: 1.1fr 0.9fr; 
@@ -253,23 +414,7 @@
             align-items: start; 
             flex-grow: 1; 
         }
-        
-        .image-box { 
-            border-radius: 16px; 
-            overflow: hidden; 
-            box-shadow: 0 12px 35px rgba(0,0,0,0.15); 
-            height: 440px; 
-            border: 6px solid #fff; 
-            background: #cbd5e1;
-        }
-        
-        .image-box img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-        }
 
-        /* ================= CITAS Y RÚBRICA ================= */
         .speaker-tag { 
             position: absolute; 
             top: 30px; 
@@ -285,7 +430,9 @@
             z-index: 10;
         }
         
-        .badge-activity { background: #b45309; }
+        .badge-activity { 
+            background: #b45309; 
+        }
 
         .citation { 
             background: #f1f5f9; 
@@ -309,7 +456,7 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        /* ================= NUEVO MOTOR DINÁMICO DE TRIVIA Y RULETA ================= */
+        /* ================= ESTRUCTURA DE LA TRIVIA INTERACTIVA ================= */
         .quiz-wrapper {
             width: 100%;
             height: 100%;
@@ -330,7 +477,6 @@
             display: flex;
         }
 
-        /* Estilos de la Caja de la Ruleta */
         .roulette-container {
             background: #f8fafc;
             border: 4px solid #1e3a8a;
@@ -485,18 +631,20 @@
 </head>
 <body>
 
-    <div class="slide-container">
-        <div class="grid-2">
-            <div>
-                <br>
-                <br>
+    <div id="lightbox-modal" class="lightbox-overlay" onclick="closeLightbox()">
+        <div class="lightbox-content-wrapper" onclick="event.stopPropagation()">
+            <button class="lightbox-close" onclick="closeLightbox()"><i class="fa-solid fa-xmark"></i></button>
+            <div id="lightbox-media-container"></div>
+        </div>
+    </div>
+
+    <div class="slide-container intro-slide">
+        <div class="hero-banner" onclick="openLightbox('iframe', 'https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=6fe7c36d-a794-4ada-9612-6f28fc5dc930')">
+            <iframe src="https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=6fe7c36d-a794-4ada-9612-6f28fc5dc930" scrolling="no" title="WhatsApp Image 2026-05-27"></iframe>
+            
+            <div class="banner-content">
                 <h1>Política Educativa y <br><span>Transformación Curricular</span></h1>
-                <p style="font-size: 24px; color: #475569; margin-top: 10px;">Estructura pedagógica y análisis de su aplicación real en el sistema educativo costarricense.</p>
-                <div style="margin-top: 40px; color: #1e3a8a; font-weight: bold; font-size: 20px;">
-                </div>
-            </div>
-            <div class="image-box">
-                <img src="https://ulicoricr.sharepoint.com/:i:/s/GPe_Digital/IQACXJXAjdLCTai_LAjBagWFAS_HuBlU6P4-nTRp2WK6e30?e=3chkGa" alt="Estudiantes en Costa Rica">
+                <p>Estructura pedagógica y análisis de su aplicación real en el sistema educativo costarricense.</p>
             </div>
         </div>
     </div>
@@ -531,10 +679,14 @@
                     </ul>
                 </div>
             </div>
-            <div class="image-box">
-                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=1200&auto=format&fit=cover" alt="Planeamiento y libros">
-            </div>
+            <div class="hero-banner" onclick="openLightbox('iframe', 'https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=d9cdb8b8-9e69-4980-ac87-f5a275364b47')">
+            
+                <iframe src="https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=d9cdb8b8-9e69-4980-ac87-f5a275364b47" scrolling="no" title="WhatsApp Image 2026-05-27"></iframe>
+            
         </div>
+        
+        </div>
+        
         <div class="btn-bulb-fact" onclick="openModal('modal-exp1')"><i class="fa-solid fa-lightbulb"></i></div>
     </div>
 
@@ -572,8 +724,8 @@
         <div class="speaker-tag">Expositor 1</div>
         <h2 class="slide-title">Un ejemplo práctico en la realidad del aula</h2>
         <div class="grid-2">
-            <div class="image-box">
-                <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=1200&auto=format&fit=cover" alt="Estudiantes en laboratorio práctico">
+            <div class="image-box" onclick="openLightbox('img', 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=1200')">
+                <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=1200&auto=format&fit=cover" alt="Estudiantes en laboratorio práctico colaborativo">
             </div>
             <div>
                 <span class="rubric-pill" style="background-color: #e0f2fe; color: #0369a1;">Caso de Aplicación: "Pensamiento Crítico"</span>
@@ -627,8 +779,8 @@
                     <p>Entiende que el mundo real no viene dividido en cuadritos o materias separadas, sino que todo está conectado. Además, asegura que las clases se adapten para incluir a todos los niños, independientemente de sus retos o condiciones.</p>
                 </div>
             </div>
-            <div class="image-box">
-                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=cover" alt="Estudiantes colaborando en equipo">
+            <div class="image-box" onclick="openLightbox('img', 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200')">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=cover" alt="Estudiantes colaborando en equipo dinámico">
             </div>
         </div>
     </div>
@@ -638,12 +790,10 @@
         <h2 class="slide-title">¿Cómo hemos cambiado a lo largo del tiempo?</h2>
         <div class="grid-2">
             <div>
-                <div class="citation" style="background-color: #fef3c7; border-left-color: #d97706; color: #451a03; font-style: normal;">
-                </div>
                 <p style="margin-top: 25px; font-size: 22px;">Las formas de enseñar en Costa Rica han ido cambiando por épocas para intentar dar respuestas a las necesidades de cada momento histórico del país.</p>
             </div>
-            <div class="image-box">
-                <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1200&auto=format&fit=cover" alt="Pizarra y aula escolar antigua">
+            <div class="image-box" onclick="openLightbox('img', 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1200')">
+                <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1200&auto=format&fit=cover" alt="Pizarra de tiza clásica representando escuela tradicional">
             </div>
         </div>
         <div class="btn-bulb-fact" onclick="openModal('modal-exp2')"><i class="fa-solid fa-lightbulb"></i></div>
@@ -651,7 +801,7 @@
 
     <div class="slide-container">
         <div class="speaker-tag">Expositor 2</div>
-        <h2 class="slide-title">2. Evolución Histórica de las Reformas</h2>
+        <h2 class="slide-title">Evolución Histórica de las Reformas</h2>
         
         <div class="timeline-viz">
             <div class="timeline-line"></div>
@@ -680,8 +830,8 @@
         <div class="speaker-tag">Expositor 3</div>
         <h2 class="slide-title">La Realidad en Cifras: El gran desafío práctico</h2>
         <div class="grid-2">
-            <div class="image-box">
-                <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1200&auto=format&fit=cover" alt="Análisis de métricas y datos">
+            <div class="image-box" onclick="openLightbox('img', 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1200')">
+                <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1200&auto=format&fit=cover" alt="Análisis de gráficos de datos y métricas académicas">
             </div>
             <div>
                 <div class="reveal-trigger" onclick="toggleReveal(this)">
@@ -737,17 +887,14 @@
                 <div class="reveal-content">
                     <p>La ciencia demuestra que el cerebro necesita un ambiente seguro y sin miedo para poder guardar información. El estrés bloquea la memoria. <strong>Solo podemos aprender aquello que nos despierta emociones positivas, curiosidad y alegría.</strong></p>
                     <br>
-                    <p>El cerebro procesa la información  en varias partes:</p>
-
-                    <ul><ul>
+                    <p>El cerebro procesa la información en varias partes:</p>
+                    <ul style="padding-left: 20px; font-size: 18px;">
                         <li>Recepción de la información.</li>
                         <li>Atención.</li>
                         <li>Comprensión y asociación.</li>
-                        <li>Memoria</li>
-                        <li>Respuesta o Aprendizaje</li>
+                        <li>Memoria.</li>
+                        <li>Respuesta o Aprendizaje.</li>
                     </ul>
-                </ul>
-
                 </div>
                 <div class="reveal-trigger" onclick="toggleReveal(this)" style="margin-top: 15px;">
                     <i class="fa-solid fa-brain"></i>
@@ -757,8 +904,8 @@
                     <p>Los juegos en clase despiertan la motivación natural y la curiosidad. Como la atención continua de un niño de escuela dura como máximo de 15 a 20 minutos, la clase aburrida donde solo habla el profesor es ineficiente para el cerebro.</p>
                 </div>
             </div>
-            <div class="image-box">
-                <img src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?q=80&w=1200&auto=format&fit=cover" alt="Cerebro y ciencia del aprendizaje">
+            <div class="image-box" onclick="openLightbox('img', 'https://images.unsplash.com/photo-1507413245164-6160d8298b31?q=80&w=1200')">
+                <img src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?q=80&w=1200&auto=format&fit=cover" alt="Ilustración científica de conexiones cerebrales cognitivas">
             </div>
         </div>
         <div class="btn-bulb-fact" onclick="openModal('modal-exp4')"><i class="fa-solid fa-lightbulb"></i></div>
@@ -768,8 +915,8 @@
         <div class="speaker-tag">Expositor 4</div>
         <h2 class="slide-title">El perfil del docente de cara al Siglo XXI</h2>
         <div class="grid-2">
-            <div class="image-box">
-                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=cover" alt="Mediador tecnológico">
+            <div class="image-box" onclick="openLightbox('img', 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=1200')">
+                <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=1200&auto=format&fit=cover" alt="Docente actuando como mediador y guía dinámico">
             </div>
             <div>
                 <div class="reveal-trigger" onclick="toggleReveal(this)">
@@ -786,7 +933,7 @@
     <div class="slide-container">
         <div class="speaker-tag badge-activity">Actividad Colectiva</div>
         <h2 class="slide-title">Espacio de Diálogo Abierto</h2>
-        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center;">
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; flex-grow: 1;">
             <div style="background: #fdf2e9; border: 4px dashed #b45309; padding: 50px; border-radius: 30px; max-width: 950px; box-shadow: 0 10px 25px rgba(180,83,9,0.05);">
                 <p style="font-size: 34px; font-weight: bold; color: #b45309; line-height: 1.4;">"De los cambios educativos comentados hoy, ¿cuál consideran que es el que más urge aplicar en las escuelas de Costa Rica?"</p>
             </div>
@@ -795,12 +942,12 @@
 
     <div class="slide-container">
         <div class="speaker-tag badge-activity">Comprobación</div>
-        <h2 class="slide-title">Ruleta Interectiva</h2>
+        <h2 class="slide-title">Ruleta Interactiva</h2>
         
         <div class="quiz-wrapper">
             <div id="quiz-start-screen" class="quiz-screen active">
                 <p style="font-size: 26px; margin-bottom: 30px; text-align: center; max-width: 800px;">
-                    instrucciones...
+                    ¡Bienvenidos a la comprobación de conocimientos! Giraremos la ruleta para asignar estratégicamente una pregunta del marco educativo a un miembro del grupo sin repeticiones.
                  </p>
                 <button class="btn-quiz-action" onclick="startQuizGame()">¡Comenzar Trivia!</button>
             </div>
@@ -887,13 +1034,48 @@
     </div>
 
     <script>
-        // ================= SCRIPTS EXISTENTES SIN REESCRIBIR =================
+        // CONTROLES DE REVEAL EXPOSICIÓN GUIADA (ACORDEÓN)
         function toggleReveal(trigger) {
             trigger.classList.toggle('active');
             const content = trigger.nextElementSibling;
             content.classList.toggle('active');
         }
 
+        // CONTROL DE VENTANA EMERGENTE MULTIMEDIA UNIVERSAL (LIGHTBOX)
+        function openLightbox(type, source) {
+            const overlay = document.getElementById('lightbox-modal');
+            const container = document.getElementById('lightbox-media-container');
+            container.innerHTML = ""; // Limpiar contenido previo
+
+            if(type === 'iframe') {
+                container.innerHTML = `<iframe src="${source}" frameborder="0" scrolling="no" allowfullscreen></iframe>`;
+            } else if(type === 'img') {
+                container.innerHTML = `<img src="${source}" alt="Imagen de presentación ampliada">`;
+            }
+
+            overlay.classList.add('active');
+        }
+
+        function closeLightbox() {
+            const overlay = document.getElementById('lightbox-modal');
+            const container = document.getElementById('lightbox-media-container');
+            overlay.classList.remove('active');
+            container.innerHTML = ""; // Limpia el iframe para detener videos/sonidos al cerrar
+        }
+
+        // Soporte nativo para cerrar con la tecla Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+                document.querySelectorAll('.fact-modal').forEach(m => m.classList.remove('active'));
+            }
+        });
+
+        // CONTROL DE VENTANAS EMERGENTES (MODALES DE TEXTO)
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        // DATOS DE LA LÍNEA DE TIEMPO INTERACTIVA
         const timelineData = [
             {
                 title: "Década de 1990 - Materias Separadas y Memorización",
@@ -920,12 +1102,7 @@
             document.getElementById('time-cite').innerHTML = timelineData[index].cite;
         }
 
-        // CONTROL DE VENTANAS EMERGENTES (MODALES)
-        function openModal(id) { document.getElementById(id).classList.add('active'); }
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-
-        // ================= NUEVO MOTOR TOTAL: RULETA CON ELIMINACIÓN Y 6 PREGUNTAS =================
-        // Lista exacta de alumnos proporcionada en tus imágenes
+        // MOTOR LOGÍSTICO COMPLETO DE LA TRIVIA
         const initialStudentsList = [
             "Bayron Herrera", "Fabiola Sharpe", "Onixsa Downs",
             "Valeria Mendoza", "Mariela Molina", "Kimberline López",
@@ -937,60 +1114,59 @@
         let studentsPool = [...initialStudentsList];
         let chosenStudent = "";
 
-        // Banco expandido a 6 preguntas estratégicas
         const quizQuestions = [
             {
                 question: "¿Quién es el centro absoluto de todo el proceso de enseñanza según las nuevas políticas de Costa Rica?",
                 options: [
                     { text: "▲ A. El Ministerio de Educación", correct: false, msg: "El MEP es el ente regulador macro, no el eje del aula." },
-                    { text: "■ B. La Persona Estudiante", correct: true, msg: "¡Excelente! Es el eje central y el sujeto de transformación." },
-                    { text: "◆ C. Los Libros de Texto Básicos", correct: false, msg: "Los libros son recursos secundarios de apoyo." },
-                    { text: "● D. Los Exámenes Tradicionales", correct: false, msg: "La evaluación tradicional hoy va en decremento." }
+                    { text: "■ B. La Persona Estudiante", correct: true, msg: "¡Excelente! Es el eje central y el sujeto de transformación social." },
+                    { text: "◆ C. Los Libros de Texto Básicos", correct: false, msg: "Los libros son recursos secundarios de apoyo pedagógico." },
+                    { text: "● D. Los Exámenes Tradicionales", correct: false, msg: "La evaluación de memoria tradicional va hoy en decremento." }
                 ]
             },
             {
                 question: "¿Cuál es la característica principal de la estabilidad de la Política Educativa?",
                 options: [
-                    { text: "▲ A. Cambia cada vez que entra un nuevo gobierno", correct: false, msg: "¡Al contrario! Se busca que sea una meta estable a largo plazo." },
-                    { text: "■ B. Es una directriz flexible creada por cada profesor", correct: false, msg: "La directriz del docente es el planeamiento, no la política macro." },
+                    { text: "▲ A. Cambia cada vez que entra un nuevo gobierno", correct: false, msg: "¡Al contrario! Se busca que sea una meta estable país a largo plazo." },
+                    { text: "■ B. Es una directriz flexible creada por cada profesor", correct: false, msg: "La directriz del docente es el planeamiento, no la política institucional macro." },
                     { text: "◆ C. Es permanente, dictada por el Consejo Superior de Educación", correct: true, msg: "¡Exacto! Es el marco jurídico que define el norte del país." },
-                    { text: "● D. Se aplica únicamente en colegios técnicos públicos", correct: false, msg: "Es obligatoria a nivel país para todo el sistema." }
+                    { text: "● D. Se aplica únicamente en colegios técnicos públicos", correct: false, msg: "Es obligatoria a nivel país para todo el sistema nacional." }
                 ]
             },
             {
                 question: "Según la neuroeducación, ¿qué elemento biológico bloquea las áreas de la memoria en el alumno?",
                 options: [
-                    { text: "▲ A. La curiosidad espontánea", correct: false, msg: "La curiosidad activa la dopamina y abre la atención." },
-                    { text: "■ B. El miedo y el estrés (Liberación de cortisol)", correct: true, msg: "¡Brillante! El cerebro asustado se defiende y bloquea el aprendizaje." },
-                    { text: "◆ C. Las dinámicas de juegos interactivos", correct: false, msg: "El juego relaja y estimula el aprendizaje significativo." },
-                    { text: "● D. Dormir las horas completas por la noche", correct: false, msg: "El sueño repara y consolida la memoria a largo plazo." }
+                    { text: "▲ A. La curiosidad espontánea", correct: false, msg: "La curiosidad activa la dopamina y abre las compuertas de la atención." },
+                    { text: "■ B. El miedo y el estrés (Liberación de cortisol)", correct: true, msg: "¡Brillante! El cerebro asustado entra en modo defensa y bloquea el aprendizaje duradero." },
+                    { text: "◆ C. Las dinámicas de juegos interactivos", correct: false, msg: "El juego relaja el sistema límbico y estimula el aprendizaje significativo." },
+                    { text: "● D. Dormir las horas completas por la noche", correct: false, msg: "El sueño repara células y ayuda a consolidar la memoria a largo plazo." }
                 ]
             },
             {
                 question: "¿Qué cambio metodológico sustenta al paradigma Socio-constructivista actual?",
                 options: [
-                    { text: "▲ A. Transmitir datos puros mediante dictados diarios extensos", correct: false, msg: "Eso corresponde a la pedagogía tradicionalista de memoria." },
-                    { text: "■ B. Construir el conocimiento de forma colectiva y en proyectos", correct: true, msg: "¡Correcto! El conocimiento es el resultado de la interacción social." },
-                    { text: "◆ C. El uso exclusivo de computadoras sin guía docente", correct: false, msg: "La tecnología sin propósito e instrucción clara carece de valor." },
-                    { text: "● D. Eliminar por completo el trabajo en equipo del aula", correct: false, msg: "El trabajo colaborativo es vital en el socio-constructivismo." }
+                    { text: "▲ A. Transmitir datos puros mediante dictados diarios extensos", correct: false, msg: "Eso corresponde a la pedagogía tradicionalista pasiva de memoria." },
+                    { text: "■ B. Construir el conocimiento de forma colectiva y en proyectos", correct: true, msg: "¡Correcto! El conocimiento es el resultado directo de la interacción social guiada." },
+                    { text: "◆ C. El uso exclusivo de computadoras sin guía docente", correct: false, msg: "La tecnología sin propósito pedagógico e instrucción clara carece de valor real." },
+                    { text: "● D. Eliminar por completo el trabajo en equipo del aula", correct: false, msg: "El trabajo cooperativo es justamente vital en el socio-constructivismo." }
                 ]
             },
             {
                 question: "¿Qué busca asegurar el Diseño Universal para el Aprendizaje (DUA) de forma obligatoria?",
                 options: [
-                    { text: "▲ A. Que todos respondan idéntico el mismo examen de folleto", correct: false, msg: "El DUA rompe el esquema rígido de evaluación uniforme." },
-                    { text: "■ B. Derribar barreras adaptando la clase a los ritmos de cada alumno", correct: true, msg: "¡Brillante! Da múltiples formas de motivación, representación y acción." },
-                    { text: "◆ C. Comprar tabletas de alta gama para todas las instituciones", correct: false, msg: "El DUA es una estrategia pedagógica, no un hardware tecnológico." },
-                    { text: "● D. Reducir el contenido curricular a la mitad de su extensión", correct: false, msg: "No disminuye el rigor, flexibiliza las vías de acceso a él." }
+                    { text: "▲ A. Que todos respondan idéntico el mismo examen de folleto", correct: false, msg: "El DUA rompe el esquema rígido de evaluación y asimilación uniforme." },
+                    { text: "■ B. Derribar barreras adaptando la clase a los ritmos de cada alumno", correct: true, msg: "¡Brillante! Da múltiples formas de motivación, representación, expresión y acción." },
+                    { text: "◆ C. Comprar tabletas de alta gama para todas las instituciones", correct: false, msg: "El DUA es una estrategia de diseño de aula, no un requerimiento de hardware." },
+                    { text: "● D. Reducir el contenido curricular a la mitad de su extensión", correct: false, msg: "No disminuye el rigor temático, flexibiliza las vías de acceso a él." }
                 ]
             },
             {
                 question: "De acuerdo con los Informes de la Nación, ¿dónde radica el reto crítico de la transformación curricular?",
                 options: [
-                    { text: "▲ A. En imprimir folletos educativos de mayor grosor", correct: false, msg: "Los materiales impresos no transforman de por sí la mediación." },
-                    { text: "■ B. En modificar las prácticas de aula reales ejecutadas por el docente", correct: true, msg: "¡Exacto! El reto no es el documento ideal, sino deconstruir la práctica tradicional." },
-                    { text: "◆ C. En aumentar el número de exámenes escritos obligatorios", correct: false, msg: "Las métricas tradicionales no resuelven la deconstrucción metodológica." },
-                    { text: "● D. En suspender el uso de portafolios de evidencias", correct: false, msg: "Los portafolios son recursos evaluativos alternos útiles." }
+                    { text: "▲ A. En imprimir folletos educativos de mayor grosor", correct: false, msg: "Los materiales impresos estáticos no transforman la mediación escolar por sí solos." },
+                    { text: "■ B. En modificar las prácticas de aula reales ejecutadas por el docente", correct: true, msg: "¡Exacto! El reto no es redactar el documento ideal, sino deconstruir la práctica tradicional arraigada." },
+                    { text: "◆ C. En aumentar el número de exámenes escritos obligatorios", correct: false, msg: "Las métricas e indicadores tradicionales no resuelven el problema de fondo metodológico." },
+                    { text: "● D. En suspender el uso de portafolios de evidencias", correct: false, msg: "Los portafolios alternativos son recursos evaluativos procesales sumamente útiles." }
                 ]
             }
         ];
@@ -1003,13 +1179,12 @@
 
         function startQuizGame() {
             document.getElementById('quiz-start-screen').classList.remove('active');
-            studentsPool = [...initialStudentsList]; // Reiniciar base de nombres
+            studentsPool = [...initialStudentsList];
             currentQuestionIndex = 0;
             score = 0;
             showRouletteScreen();
         }
 
-        // Pantalla de Ruleta
         function showRouletteScreen() {
             document.getElementById('quiz-game-screen').classList.remove('active');
             document.getElementById('quiz-roulette-screen').classList.add('active');
@@ -1018,10 +1193,9 @@
             document.getElementById('btn-goToQuestion').style.display = "none";
         }
 
-        // Lógica de Giro Animado de la Ruleta
         function spinRoulette() {
             if (studentsPool.length === 0) {
-                studentsPool = [...initialStudentsList]; // Si se acaban, recarga la lista
+                studentsPool = [...initialStudentsList];
             }
 
             const rouletteBox = document.getElementById('roulette-box');
@@ -1033,53 +1207,42 @@
             let currentIntervalTime = 50;
 
             function runTick() {
-                // Selecciona un nombre rápido provisional para el efecto visual
                 let tempIdx = Math.floor(Math.random() * studentsPool.length);
                 rouletteBox.innerText = studentsPool[tempIdx];
                 spinTicks++;
 
-                if (spinTicks < 30) {
+                if (spinTicks < 25) {
                     setTimeout(runTick, currentIntervalTime);
                 } else {
-                    // Fin del giro: Selección real
                     rouletteBox.classList.remove('spinning');
                     let finalIdx = Math.floor(Math.random() * studentsPool.length);
                     chosenStudent = studentsPool[finalIdx];
                     
-                    // Mostrar el ganador definitivo
                     rouletteBox.innerText = `🎯 ¡${chosenStudent}!`;
-                    
-                    // ELIMINACIÓN CRUCIAL: Sacar al seleccionado del pool activo para evitar repetición
-                    studentsPool.splice(finalIdx, 1);
+                    studentsPool.splice(finalIdx, 1); // Remueve al estudiante seleccionado para evitar repeticiones sucesivas
 
-                    // Habilitar el paso a la pregunta
                     btnSpin.style.pointerEvents = "auto";
                     btnSpin.style.display = "none";
-                    document.getElementById('btn-goToQuestion').style.style = "inline-block";
                     document.getElementById('btn-goToQuestion').style.display = "inline-block";
                 }
             }
             runTick();
         }
 
-        // Transición de la ruleta a la visualización de la pregunta asignada
         function goToQuestionNow() {
             document.getElementById('quiz-roulette-screen').classList.remove('active');
             document.getElementById('quiz-game-screen').classList.add('active');
             loadQuestion();
         }
 
-        // Inyección de contenido de la pregunta y arranque del cronómetro
         function loadQuestion() {
             questionAnswered = false;
             clearInterval(timerInterval);
             timeLeft = 20;
             document.getElementById('quiz-timer').innerText = timeLeft;
             document.getElementById('quiz-feedback').innerText = "";
-            document.getElementById('quiz-feedback').style.color = "white";
             document.getElementById('quiz-next-btn').style.display = "none";
 
-            // Mostrar el nombre del seleccionado en la interfaz
             document.getElementById('student-assigned-badge').innerHTML = `<i class="fa-solid fa-user"></i> Turno de: ${chosenStudent}`;
 
             const currentQuestion = quizQuestions[currentQuestionIndex];
@@ -1115,7 +1278,7 @@
         function timeOutLoss() {
             questionAnswered = true;
             disableAllOptions();
-            document.getElementById('quiz-feedback').innerText = "⏱️ ¡Se agotó el tiempo reglamentario!";
+            document.getElementById('quiz-feedback').innerText = "⏱️ ¡Se venció el tiempo reglamentario para responder!";
             document.getElementById('quiz-feedback').style.color = "#ef4444";
             highlightCorrectAnswer();
             document.getElementById('quiz-next-btn').style.display = "block";
@@ -1162,7 +1325,7 @@
         function prepareNextRound() {
             currentQuestionIndex++;
             if (currentQuestionIndex < quizQuestions.length) {
-                showRouletteScreen(); // Vuelve a la ruleta para la siguiente pregunta
+                showRouletteScreen();
             } else {
                 showFinalResults();
             }
