@@ -185,55 +185,71 @@
             color: #ef4444; 
         }
 
-        /* Contenedor de imagen estándar */
+  /* ================= DISTRIBUCIÓN EN REJILLA E IMÁGENES ================= */
+        .grid-2 { 
+            display: grid; 
+            grid-template-columns: 1.1fr 0.9fr; 
+            gap: 50px; 
+            align-items: center;    /* Centra verticalmente la imagen con respecto al texto */
+            flex-grow: 1; 
+        }
+        
+        /* AJUSTADO: Estilo limpio estilo tarjeta flotante (Mockup) */
         .image-box { 
-            border-radius: 16px; 
+            border-radius: 32px;    /* Esquinas notablemente más redondeadas según la referencia */
             overflow: hidden; 
-            box-shadow: 0 12px 35px rgba(0,0,0,0.15); 
-            height: 440px; 
-            border: 6px solid #fff; 
-            background: #cbd5e1;
+            /* Sombra suave, profunda y difuminada en entornos claros */
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04); 
+            width: 100%;            
+            height: auto;           /* Se adapta proporcionalmente a la imagen sin dejar aire */
+            border: none;           /* Eliminamos el borde blanco grueso para un look moderno e integrado */
+            background: #ffffff;    
             position: relative;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
         }
-
+        
+        /* Efecto sutil al pasar el mouse */
         .image-box:hover {
-            transform: scale(1.02);
-            box-shadow: 0 15px 40px rgba(30, 58, 138, 0.25);
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 25px 55px rgba(30, 58, 138, 0.12);
         }
 
+        /* Lupa flotante interactiva estilizada */
         .image-box::after {
             content: "\f00e";
             font-family: "Font Awesome 6 Free";
             font-weight: 900;
             position: absolute;
-            bottom: 15px;
-            right: 15px;
-            background: rgba(30, 58, 138, 0.85);
-            color: white;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95); /* Fondo blanco limpio para la lupa */
+            color: #1e3a8a;
             width: 45px;
             height: 45px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 16px;
             opacity: 0;
-            transition: opacity 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: opacity 0.3s ease, transform 0.3s ease;
             pointer-events: none;
+            z-index: 2;
         }
 
         .image-box:hover::after {
             opacity: 1;
         }
         
+        /* Renderizado limpio de la imagen dentro de la tarjeta */
         .image-box img { 
             width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
+            height: auto;           
+            display: block;         
+            object-fit: cover;
         }
-
         /* ================= CONTROL DE BOMBILLOS DE CONTEXTO ================= */
         .btn-bulb-fact {
             position: absolute;
@@ -627,7 +643,20 @@
         .btn-next-question:hover {
             background: #1d4ed8;
         }
+
+        
     </style>
+
+    <style>
+    /* Ajustamos el contenedor para que tenga el tamaño que buscas */
+    .iframe-container {
+        width: 100%;
+        max-width: 800px; /* Tamaño considerable */
+        height: 350px;    /* Altura considerable */
+        margin: 20px auto;
+        background: #fff;
+    }
+</style>
 </head>
 <body>
 
@@ -650,10 +679,12 @@
     </div>
 
     <div class="slide-container">
-        <div class="speaker-tag">Expositor 1</div>
+        <div class="speaker-tag">B</div>
         <h2 class="slide-title">¿De qué estamos hablando exactamente?</h2>
         <div class="grid-2">
             <div>
+                <br>
+                <br>
                 <div class="reveal-trigger" onclick="toggleReveal(this)">
                     <i class="fa-solid fa-chevron-down"></i>
                     <h3>1. ¿Qué es la Política Educativa?</h3>
@@ -679,19 +710,30 @@
                     </ul>
                 </div>
             </div>
-            <div class="hero-banner" onclick="openLightbox('iframe', 'https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=d9cdb8b8-9e69-4980-ac87-f5a275364b47')">
+       
+            <div class="image-box iframe-container" style="position: relative; overflow: hidden;">
+    
+    <div onclick="openLightbox('iframe', 'https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=d9cdb8b8-9e69-4980-ac87-f5a275364b47')" 
+         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; cursor: pointer;">
+    </div>
+
+    <iframe src="https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=d9cdb8b8-9e69-4980-ac87-f5a275364b47" 
+            scrolling="no" 
+            title="WhatsApp Image 2026-05-27" 
+            style="width: 100%; height: 100%; border: none; display: block;">
+    </iframe>
             
-                <iframe src="https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=d9cdb8b8-9e69-4980-ac87-f5a275364b47" scrolling="no" title="WhatsApp Image 2026-05-27"></iframe>
-            
-        </div>
-        
+</div>
+
+
+
         </div>
         
         <div class="btn-bulb-fact" onclick="openModal('modal-exp1')"><i class="fa-solid fa-lightbulb"></i></div>
     </div>
 
     <div class="slide-container">
-        <div class="speaker-tag">Expositor 1</div>
+        <div class="speaker-tag">B</div>
         <h2 class="slide-title">¿Por qué importa y qué se gana con esto?</h2>
         <div style="display: flex; flex-direction: column; gap: 20px; flex-grow: 1; justify-content: center;">
             <div>
@@ -715,19 +757,50 @@
                         <li style="margin-bottom: 12px;"><strong>Pensar en lugar de repetir:</strong> Logramos estudiantes capaces de analizar su entorno en vez de personas que solo memorizan para pasar un examen escrito.</li>
                         <li><strong>Educación con sentido:</strong> Permite que las escuelas cambien rápido y respondan a las tecnologías y problemas de su propia comunidad.</li>
                     </ul>
+                    <br>
+                   
                 </div>
+                <br>
+                 <div class="image-box iframe-container" style="position: relative; overflow: hidden;">
+    
+    <div onclick="openLightbox('iframe', 'https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=c1bcd81c-c228-4f84-bd63-82043da9c3f5')" 
+         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; cursor: pointer;">
+    </div>
+
+    <iframe src="https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=c1bcd81c-c228-4f84-bd63-82043da9c3f5" 
+            scrolling="no" 
+            title="WhatsApp Image 2026-05-27" 
+            style="width: 100%; height: 100%; border: none; display: block;">
+    </iframe>
+            
+</div>
             </div>
         </div>
     </div>
 
     <div class="slide-container">
-        <div class="speaker-tag">Expositor 1</div>
+        <div class="speaker-tag">B</div>
         <h2 class="slide-title">Un ejemplo práctico en la realidad del aula</h2>
         <div class="grid-2">
-            <div class="image-box" onclick="openLightbox('img', 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=1200')">
-                <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=1200&auto=format&fit=cover" alt="Estudiantes en laboratorio práctico colaborativo">
-            </div>
+
+       
+           <div class="image-box iframe-container" style="position: relative; overflow: hidden;">
+    
+    <div onclick="openLightbox('iframe', 'https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=9bf394b5-ac03-45cc-a221-5a53308fdd77')" 
+         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; cursor: pointer;">
+    </div>
+
+    <iframe src="https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=9bf394b5-ac03-45cc-a221-5a53308fdd77" 
+            scrolling="no" 
+            title="WhatsApp Image 2026-05-27" 
+            style="width: 100%; height: 100%; border: none; display: block;">
+    </iframe>
+            
+</div>
+
             <div>
+                <br>
+                <br>
                 <span class="rubric-pill" style="background-color: #e0f2fe; color: #0369a1;">Caso de Aplicación: "Pensamiento Crítico"</span>
                 <div class="reveal-trigger" onclick="toggleReveal(this)" style="margin-top: 15px;">
                     <i class="fa-solid fa-file-invoice"></i>
@@ -748,10 +821,13 @@
     </div>
 
     <div class="slide-container">
-        <div class="speaker-tag">Expositor 1</div>
+        <div class="speaker-tag">B</div>
         <h2 class="slide-title">Características Clave del Enfoque Actual</h2>
         <div class="grid-2">
             <div>
+                <br>
+                <br>
+                <br>
                 <div class="reveal-trigger" onclick="toggleReveal(this)">
                     <i class="fa-solid fa-seedling"></i>
                     <h3>Humanista (Eje Central)</h3>
@@ -774,33 +850,62 @@
                     <i class="fa-solid fa-bezier-curve"></i>
                     <h3>Inclusión y Enfoque de Complejidad</h3>
                 </div>
+
                 <div class="reveal-content">
                     <span class="rubric-pill">Visión Global</span>
                     <p>Entiende que el mundo real no viene dividido en cuadritos o materias separadas, sino que todo está conectado. Además, asegura que las clases se adapten para incluir a todos los niños, independientemente de sus retos o condiciones.</p>
                 </div>
             </div>
-            <div class="image-box" onclick="openLightbox('img', 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200')">
-                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=cover" alt="Estudiantes colaborando en equipo dinámico">
-            </div>
+
+            <div class="image-box iframe-container" style="position: relative; overflow: hidden; cursor: pointer;">
+    
+    <div onclick="openLightbox('iframe', 'https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=bbbe3e6d-c49a-48d5-ab4d-e653bc93d644')" 
+         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+    </div>
+
+    <iframe src="https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=bbbe3e6d-c49a-48d5-ab4d-e653bc93d644" 
+            title="Estudiantes colaborando en equipo dinámico"
+            style="width: 100%; height: 100%; border: none; display: block;">
+    </iframe>
+            
+</div>
+
+
         </div>
     </div>
 
     <div class="slide-container">
-        <div class="speaker-tag">Expositor 2</div>
+        <div class="speaker-tag">M</div>
         <h2 class="slide-title">¿Cómo hemos cambiado a lo largo del tiempo?</h2>
         <div class="grid-2">
+            
             <div>
+                <br>
+                <br>
+                <br>
+                <br>
                 <p style="margin-top: 25px; font-size: 22px;">Las formas de enseñar en Costa Rica han ido cambiando por épocas para intentar dar respuestas a las necesidades de cada momento histórico del país.</p>
             </div>
-            <div class="image-box" onclick="openLightbox('img', 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1200')">
-                <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1200&auto=format&fit=cover" alt="Pizarra de tiza clásica representando escuela tradicional">
-            </div>
+
+              <div class="image-box iframe-container" style="position: relative; overflow: hidden;">
+    
+    <div onclick="openLightbox('iframe', 'https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=a2ea043d-b4fc-431c-9ba9-06a4ab212fc5')" 
+         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; cursor: pointer;">
+    </div>
+
+    <iframe src="https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=a2ea043d-b4fc-431c-9ba9-06a4ab212fc5" 
+            scrolling="no" 
+            title="WhatsApp Image 2026-05-27" 
+            style="width: 100%; height: 100%; border: none; display: block;">
+    </iframe>
+            
+</div>
         </div>
         <div class="btn-bulb-fact" onclick="openModal('modal-exp2')"><i class="fa-solid fa-lightbulb"></i></div>
     </div>
 
     <div class="slide-container">
-        <div class="speaker-tag">Expositor 2</div>
+        <div class="speaker-tag">M</div>
         <h2 class="slide-title">Evolución Histórica de las Reformas</h2>
         
         <div class="timeline-viz">
@@ -822,18 +927,49 @@
             <div class="citation" id="time-cite">
                 "El currículo de finales del siglo XX mantuvo una marcada fragmentación disciplinar, limitando el desarrollo de competencias de pensamiento complejo y sistémico."
                 <span style="display:block; text-align:right; font-weight:bold; font-style:normal; color:#1e3a8a; margin-top:5px;">— Programa Estado de la Nación (2011, p. 85)</span>
+            <br>
+            
             </div>
+
+            <div id="time-content-area" style="background: #f8fafc; padding: 30px; border-radius: 16px; border: 1px solid #e2e8f0; min-height: 250px; display: flex; flex-direction: column;">
+    
+    <div id="time-img-box" class="image-box iframe-container" style="position: relative; overflow: hidden; margin-bottom: 20px; width: 100%; max-width: 800px; height: 400px; margin-left: auto; margin-right: auto;">
+        
+        <div id="time-lightbox-trigger" 
+             onclick="openLightbox('iframe', 'https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=c0955c02-d28d-4dc2-a8bf-2c08c16a0585')" 
+             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; cursor: pointer;">
+        </div>
+
+        <iframe id="time-iframe" 
+                src="https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=c0955c02-d28d-4dc2-a8bf-2c08c16a0585" 
+                style="width: 100%; height: 100%; border: none; display: block;">
+        </iframe>
+    </div>
+
+</div>
+        
         </div>
     </div>
 
     <div class="slide-container">
-        <div class="speaker-tag">Expositor 3</div>
+        <div class="speaker-tag">A</div>
         <h2 class="slide-title">La Realidad en Cifras: El gran desafío práctico</h2>
         <div class="grid-2">
-            <div class="image-box" onclick="openLightbox('img', 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1200')">
-                <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1200&auto=format&fit=cover" alt="Análisis de gráficos de datos y métricas académicas">
-            </div>
+            <div id="time-img-box" class="image-box iframe-container" style="position: relative; overflow: hidden; margin-bottom: 20px; width: 100%; max-width: 800px; height: 400px; margin-left: auto; margin-right: auto;">
+        
+        <div id="time-lightbox-trigger" 
+             onclick="openLightbox('iframe', 'https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=34898d25-d942-4d92-a699-f6fa553e200f')" 
+             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; cursor: pointer;">
+        </div>
+
+        <iframe id="time-iframe" 
+                src="https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=34898d25-d942-4d92-a699-f6fa553e200f" 
+                style="width: 100%; height: 100%; border: none; display: block;">
+        </iframe>
+    </div>
             <div>
+                <br>
+                <br>
                 <div class="reveal-trigger" onclick="toggleReveal(this)">
                     <i class="fa-solid fa-triangle-exclamation"></i>
                     <h3>El gran abismo entre el papel y las aulas</h3>
@@ -851,9 +987,11 @@
     </div>
 
     <div class="slide-container">
-        <div class="speaker-tag">Expositor 3</div>
+        <div class="speaker-tag">A</div>
         <h2 class="slide-title">Propuestas concretas para mitigar el rezago</h2>
         <div style="display: flex; flex-direction: column; gap: 15px; flex-grow: 1; justify-content: center;">
+           
+
             <div>
                 <div class="reveal-trigger" onclick="toggleReveal(this)">
                     <i class="fa-solid fa-graduation-cap"></i>
@@ -863,6 +1001,7 @@
                     <p>Cambiar los planes de estudio en las universidades que forman maestros, para que los futuros docentes aprendan técnicas de enseñanza prácticas, dinámicas e interactivas en vez de solo teoría de folletos viejos.</p>
                 </div>
             </div>
+
             <div>
                 <div class="reveal-trigger" onclick="toggleReveal(this)">
                     <i class="fa-solid fa-wheelchair-move"></i>
@@ -872,19 +1011,39 @@
                     <p>Capacitar a fondo en el Diseño Universal para el Aprendizaje (DUA). Esto es crear materiales pensando en que todos los niños aprenden a ritmos diferentes, asegurando que nadie se quede atrás por barreras en el aula.</p>
                 </div>
             </div>
+
+             <br>
+<div id="time-img-box" class="image-box iframe-container" style="position: relative; overflow: hidden; margin-bottom: 20px; width: 100%; max-width: 800px; height: 400px; margin-left: auto; margin-right: auto;">
+        
+        <div id="time-lightbox-trigger" 
+             onclick="openLightbox('iframe', 'https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=2cbb6a70-c02c-4279-8463-6e0698fb6e07')" 
+             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; cursor: pointer;">
+        </div>
+
+        <iframe id="time-iframe" 
+                src="https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=2cbb6a70-c02c-4279-8463-6e0698fb6e07" 
+                style="width: 100%; height: 100%; border: none; display: block;">
+        </iframe>
+    </div>
         </div>
     </div>
 
     <div class="slide-container">
-        <div class="speaker-tag">Expositor 4</div>
+        <div class="speaker-tag">S</div>
         <h2 class="slide-title">Neuroeducación: ¿Cómo procesa el cerebro la información?</h2>
         <div class="grid-2">
             <div>
+                <br>
+                    <br>
+                    <br>
+                    <br>
                 <div class="reveal-trigger" onclick="toggleReveal(this)">
                     <i class="fa-solid fa-heart-pulse"></i>
                     <h3>El binomio Emoción - Cognición</h3>
                 </div>
+                
                 <div class="reveal-content">
+                    
                     <p>La ciencia demuestra que el cerebro necesita un ambiente seguro y sin miedo para poder guardar información. El estrés bloquea la memoria. <strong>Solo podemos aprender aquello que nos despierta emociones positivas, curiosidad y alegría.</strong></p>
                     <br>
                     <p>El cerebro procesa la información en varias partes:</p>
@@ -904,20 +1063,39 @@
                     <p>Los juegos en clase despiertan la motivación natural y la curiosidad. Como la atención continua de un niño de escuela dura como máximo de 15 a 20 minutos, la clase aburrida donde solo habla el profesor es ineficiente para el cerebro.</p>
                 </div>
             </div>
-            <div class="image-box" onclick="openLightbox('img', 'https://images.unsplash.com/photo-1507413245164-6160d8298b31?q=80&w=1200')">
-                <img src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?q=80&w=1200&auto=format&fit=cover" alt="Ilustración científica de conexiones cerebrales cognitivas">
-            </div>
+             
+<div id="time-img-box" class="image-box iframe-container" style="position: relative; overflow: hidden; margin-bottom: 20px; width: 100%; max-width: 800px; height: 400px; margin-left: auto; margin-right: auto;">
+        
+        <div id="time-lightbox-trigger" 
+             onclick="openLightbox('iframe', 'https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=aceac73b-f068-4587-aa98-9ea7679d1bb1')" 
+             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; cursor: pointer;">
+        </div>
+
+        <iframe id="time-iframe" 
+                src="https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=aceac73b-f068-4587-aa98-9ea7679d1bb1" 
+                style="width: 100%; height: 100%; border: none; display: block;">
+        </iframe>
+    </div>
         </div>
         <div class="btn-bulb-fact" onclick="openModal('modal-exp4')"><i class="fa-solid fa-lightbulb"></i></div>
     </div>
 
     <div class="slide-container">
-        <div class="speaker-tag">Expositor 4</div>
+        <div class="speaker-tag">S</div>
         <h2 class="slide-title">El perfil del docente de cara al Siglo XXI</h2>
         <div class="grid-2">
-            <div class="image-box" onclick="openLightbox('img', 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=1200')">
-                <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=1200&auto=format&fit=cover" alt="Docente actuando como mediador y guía dinámico">
-            </div>
+            <div id="time-img-box" class="image-box iframe-container" style="position: relative; overflow: hidden; margin-bottom: 20px; width: 100%; max-width: 800px; height: 400px; margin-left: auto; margin-right: auto;">
+        
+        <div id="time-lightbox-trigger" 
+             onclick="openLightbox('iframe', 'https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=dc74ee69-dcdb-4370-a2ea-67d9015b96f9')" 
+             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; cursor: pointer;">
+        </div>
+
+        <iframe id="time-iframe" 
+                src="https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=dc74ee69-dcdb-4370-a2ea-67d9015b96f9" 
+                style="width: 100%; height: 100%; border: none; display: block;">
+        </iframe>
+    </div>
             <div>
                 <div class="reveal-trigger" onclick="toggleReveal(this)">
                     <i class="fa-solid fa-signs-post"></i>
@@ -931,7 +1109,7 @@
     </div>
 
     <div class="slide-container">
-        <div class="speaker-tag badge-activity">Actividad Colectiva</div>
+        <div class="speaker-tag badge-activity">Actividad #1</div>
         <h2 class="slide-title">Espacio de Diálogo Abierto</h2>
         <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; flex-grow: 1;">
             <div style="background: #fdf2e9; border: 4px dashed #b45309; padding: 50px; border-radius: 30px; max-width: 950px; box-shadow: 0 10px 25px rgba(180,83,9,0.05);">
@@ -941,13 +1119,17 @@
     </div>
 
     <div class="slide-container">
-        <div class="speaker-tag badge-activity">Comprobación</div>
+        <div class="speaker-tag badge-activity">Actividad #2</div>
         <h2 class="slide-title">Ruleta Interactiva</h2>
         
         <div class="quiz-wrapper">
             <div id="quiz-start-screen" class="quiz-screen active">
                 <p style="font-size: 26px; margin-bottom: 30px; text-align: center; max-width: 800px;">
-                    ¡Bienvenidos a la comprobación de conocimientos! Giraremos la ruleta para asignar estratégicamente una pregunta del marco educativo a un miembro del grupo sin repeticiones.
+                    ¡Es momento de poner a prueba lo aprendido! 
+                    <br>
+                    A continuación, giraremos nuestra ruleta para elegir a un participante al azar. Quien sea seleccionado tendrá el reto de responder una pregunta clave sobre nuestra exposición. 
+                    <br>
+                    ¡Tendrán 20 segundos para demostrar su dominio del tema!
                  </p>
                 <button class="btn-quiz-action" onclick="startQuizGame()">¡Comenzar Trivia!</button>
             </div>
@@ -991,20 +1173,60 @@
     </div>
 
     <div class="slide-container">
-        <h2 class="slide-title">Referencias Académicas</h2>
-        <div style="font-size: 19px; color: #475569; line-height: 1.8; display: flex; flex-direction: column; justify-content: center; flex-grow: 1;">
-            <p style="margin-bottom: 12px;">• Consejo Superior de Educación. (2017). <i>Política Educativa: La persona: centro del proceso educativo y sujeto de transformación social</i>. San José, Costa Rica.</p>
-            <p style="margin-bottom: 12px;">• Ministerio de Educación Pública. (2015). <i>Educar para una nueva ciudadanía: Fundamentación pedagógica de la transformación curricular</i>. Despacho de la Ministra.</p>
-            <p style="margin-bottom: 12px;">• Mora, F. (2017). <i>Neuroeducación: Solo se puede aprender aquello que se ama</i> (2.ª ed.). Alianza Editorial.</p>
-            <p style="margin-bottom: 12px;">• Programa Estado de la Nación. (2011). <i>IV Informe Estado de la Educación</i>. San José: Servicios Gráficos del ACAN.</p>
-            <p style="margin-bottom: 12px;">• Programa Estado de la Nación. (2023). <i>X Informe Estado de la Educación</i>. Consejo Nacional de Rectores (CONARE).</p>
+       
+        <h2 class="slide-title">Resumen del Brochure</h2>
+        
+        <div id="time-img-box" class="image-box iframe-container" style="position: relative; overflow: hidden; margin-bottom: 20px; width: 100%; max-width: 800px; height: 400px; margin-left: auto; margin-right: auto;">
+        
+        <div id="time-lightbox-trigger" 
+             onclick="openLightbox('iframe', 'https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=5d215a73-ce02-4973-9101-a243286bd298')" 
+             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; cursor: pointer;">
         </div>
+
+        <iframe id="time-iframe" 
+                src="https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=5d215a73-ce02-4973-9101-a243286bd298" 
+                style="width: 100%; height: 100%; border: none; display: block;">
+        </iframe>
+    </div>
+    </div>
+
+   <div class="slide-container">
+    <h2 class="slide-title">Referencias Académicas</h2>
+    
+    <div style="font-size: 19px; color: #475569; line-height: 1.8; margin-bottom: 30px;">
+        <ul style="list-style-type: none;">
+            <li style="margin-bottom: 12px;">• Consejo Superior de Educación. (2017). <i>Política Educativa: La persona: centro del proceso educativo y sujeto de transformación social</i>. San José, Costa Rica.</li>
+            <li style="margin-bottom: 12px;">• Ministerio de Educación Pública. (2015). <i>Educar para una nueva ciudadanía: Fundamentación pedagógica de la transformación curricular</i>. Despacho de la Ministra.</li>
+            <li style="margin-bottom: 12px;">• Mora, F. (2017). <i>Neuroeducación: Solo se puede aprender aquello que se ama</i> (2.ª ed.). Alianza Editorial.</li>
+            <li style="margin-bottom: 12px;">• Programa Estado de la Nación. (2011). <i>IV Informe Estado de la Educación</i>. San José: Servicios Gráficos del ACAN.</li>
+            <li style="margin-bottom: 12px;">• Programa Estado de la Nación. (2023). <i>X Informe Estado de la Educación</i>. Consejo Nacional de Rectores (CONARE).</li>
+        </ul>
+    </div>
+
+    <div style="padding: 30px; background: #f8fafc; border-radius: 20px; border: 1px solid #e2e8f0; display: flex; align-items: center; gap: 40px;">
+        <div style="flex-grow: 1;">
+            <p style="font-size: 22px; color: #b45309; font-weight: bold; margin-bottom: 15px;">
+                Universidad Libre de Costa Rica
+            </p>
+            <p style="font-size: 18px; color: #1e3a8a; font-weight: bold; margin-bottom: 8px;">Elaborado por:</p>
+            <p style="font-size: 19px; color: #334155; line-height: 1.5; font-weight: 500;">
+                Aishelyn Guerrero Greenald / Bryan Gómez Peña / Melany Vargas Castro / Sharoky Navas Mora.
+            </p>
+        </div>
+        
+        <div style="width: 280px; height: 140px; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0; background: white; flex-shrink: 0;">
+            <iframe src="https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=49283632-b0b7-4626-940a-d002d492df74" 
+                    style="width: 100%; height: 100%; border: none;" title="Logo Universidad Libre de Costa Rica">
+            </iframe>
+        </div>
+    </div>
+</div>
     </div>
 
     <div id="modal-exp1" class="fact-modal">
         <div class="fact-modal-content">
             <span class="fact-modal-close" onclick="closeModal('modal-exp1')">&times;</span>
-            <h3 style="color: #b45309; font-size: 28px; margin-bottom: 15px;"><i class="fa-solid fa-lightbulb"></i> ¿Sabías que...? (Expositor 1)</h3>
+            <h3 style="color: #b45309; font-size: 28px; margin-bottom: 15px;"><i class="fa-solid fa-lightbulb"></i> ¿Sabías que...? </h3>
             <p>Nuestra Constitución Política estipula de forma estricta y obligatoria el financiamiento macro de la educación pública costarricense, garantizando que sea una de las prioridades legales y presupuestarias del Estado para asegurar la permanencia del sistema.</p>
         </div>
     </div>
@@ -1012,7 +1234,7 @@
     <div id="modal-exp2" class="fact-modal">
         <div class="fact-modal-content">
             <span class="fact-modal-close" onclick="closeModal('modal-exp2')">&times;</span>
-            <h3 style="color: #b45309; font-size: 28px; margin-bottom: 15px;"><i class="fa-solid fa-lightbulb"></i> ¿Sabías que...? (Expositor 2)</h3>
+            <h3 style="color: #b45309; font-size: 28px; margin-bottom: 15px;"><i class="fa-solid fa-lightbulb"></i> ¿Sabías que...? </h3>
             <p>La famosa reforma hacia la <em>"Educación para una Nueva Ciudadanía"</em> (periodo 2014-2018) sustituyó por completo los viejos objetivos memorísticos lineales por un plan basado en 4 grandes ejes de competencias transversales para toda la vida.</p>
         </div>
     </div>
@@ -1020,7 +1242,7 @@
     <div id="modal-exp3" class="fact-modal">
         <div class="fact-modal-content">
             <span class="fact-modal-close" onclick="closeModal('modal-exp3')">&times;</span>
-            <h3 style="color: #b45309; font-size: 28px; margin-bottom: 15px;"><i class="fa-solid fa-lightbulb"></i> ¿Sabías que...? (Expositor 3)</h3>
+            <h3 style="color: #b45309; font-size: 28px; margin-bottom: 15px;"><i class="fa-solid fa-lightbulb"></i> ¿Sabías que...?</h3>
             <p>El Informe del Estado de la Educación recalca que el verdadero cuello de botella para modernizar las aulas no son los documentos curriculares del MEP, sino capacitar y deconstruir los métodos lineales tradicionales que el cuerpo docente aplica en el día a día.</p>
         </div>
     </div>
@@ -1028,7 +1250,7 @@
     <div id="modal-exp4" class="fact-modal">
         <div class="fact-modal-content">
             <span class="fact-modal-close" onclick="closeModal('modal-exp4')">&times;</span>
-            <h3 style="color: #b45309; font-size: 28px; margin-bottom: 15px;"><i class="fa-solid fa-lightbulb"></i> ¿Sabías que...? (Expositor 4)</h3>
+            <h3 style="color: #b45309; font-size: 28px; margin-bottom: 15px;"><i class="fa-solid fa-lightbulb"></i> ¿Sabías que...? </h3>
             <p>El cerebro infantil segrega dosis masivas de cortisol bajo estrés o aburrimiento lineal, bloqueando los hipocampos encargados de almacenar datos estables. Solo los estímulos lúdicos y con carga emocional positiva abren la plasticidad cognitiva.</p>
         </div>
     </div>
@@ -1076,31 +1298,45 @@
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
         // DATOS DE LA LÍNEA DE TIEMPO INTERACTIVA
-        const timelineData = [
-            {
-                title: "Década de 1990 - Materias Separadas y Memorización",
-                desc: "En esta época el foco era modernizar los contenidos de los libros y lograr que más niños entraran a las escuelas. Las clases se basaban en aprender temas de forma lineal, aislada y super memorística, usando exámenes tradicionales como única regla de medición.",
-                cite: `"El currículo de finales del siglo XX mantuvo una marcada fragmentación disciplinar, limitando el desarrollo de competencias de pensamiento complejo y sistémico." <span style="display:block; text-align:right; font-weight:bold; font-style:normal; color:#1e3a8a; margin-top:5px;">— Programa Estado de la Nación (2011, p. 85)</span>`
-            },
-            {
-                title: "Periodo 2014 - 2018 - Educar para una Nueva Ciudadanía",
-                desc: "Se rompe formalmente con las clases de repetir y copiar de la pizarra. Se crean programas oficiales enfocados en que el estudiante aprenda habilidades útiles divididas en 4 grandes áreas para enfrentar el mundo global de hoy.",
-                cite: `"La reforma curricular impulsó el diseño de perfiles de salida basados en habilidades, transformando la planificación operativa del aula." <span style="display:block; text-align:right; font-weight:bold; font-style:normal; color:#1e3a8a; margin-top:5px;">— Ministerio de Educación Pública (2015, p. 12)</span>`
-            },
-            {
-                title: "Tendencias Actuales - Inclusión Mediante DUA y Nivelación",
-                desc: "Estrategias flexibles y dinámicas para recuperar el tiempo perdido por los cierres de escuelas. Se vuelve obligatorio el uso del Diseño Universal para el Aprendizaje (DUA) para respetar los ritmos de cada niño, la tecnología con propósito y el cuidado de las emociones.",
-                cite: `"Los marcos pedagógicos contemporáneos exigen la creación de entornos dinámicos que reconozcan las necesidades diversas de toda la población estudiantil." <span style="display:block; text-align:right; font-weight:bold; font-style:normal; color:#1e3a8a; margin-top:5px;">— UNESCO (2021, p. 34)</span>`
-            }
-        ];
+const timelineData = [
+    {
+        title: "Década de 1990 - Materias Separadas y Memorización",
+        desc: "En esta época el foco era modernizar los contenidos de los libros y lograr que más niños entraran a las escuelas. Las clases se basaban en aprender temas de forma lineal, aislada y super memorística, usando exámenes tradicionales como única regla de medición.",
+        cite: `"El currículo de finales del siglo XX mantuvo una marcada fragmentación disciplinar, limitando el desarrollo de competencias de pensamiento complejo y sistémico." <span style="display:block; text-align:right; font-weight:bold; font-style:normal; color:#1e3a8a; margin-top:5px;">— Programa Estado de la Nación (2011, p. 85)</span>`,
+        imgUrl: "https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=c0955c02-d28d-4dc2-a8bf-2c08c16a0585" // Tu URL
+    },
+    {
+        title: "Periodo 2014 - 2018 - Educar para una Nueva Ciudadanía",
+        desc: "Se rompe formalmente con las clases de repetir y copiar de la pizarra. Se crean programas oficiales enfocados en que el estudiante aprenda habilidades útiles divididas en 4 grandes áreas para enfrentar el mundo global de hoy.",
+        cite: `"La reforma curricular impulsó el diseño de perfiles de salida basados en habilidades, transformando la planificación operativa del aula." <span style="display:block; text-align:right; font-weight:bold; font-style:normal; color:#1e3a8a; margin-top:5px;">— Ministerio de Educación Pública (2015, p. 12)</span>`,
+        imgUrl: "https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=caf1cb6c-69be-4426-9ff9-2c6a5cfd41d9" 
+    },
+    {
+        title: "Tendencias Actuales - Inclusión Mediante DUA y Nivelación",
+        desc: "Estrategias flexibles y dinámicas para recuperar el tiempo perdido por los cierres de escuelas. Se vuelve obligatorio el uso del Diseño Universal para el Aprendizaje (DUA) para respetar los ritmos de cada niño, la tecnología con propósito y el cuidado de las emociones.",
+        cite: `"Los marcos pedagógicos contemporáneos exigen la creación de entornos dinámicos que reconozcan las necesidades diversas de toda la población estudiantil." <span style="display:block; text-align:right; font-weight:bold; font-style:normal; color:#1e3a8a; margin-top:5px;">— UNESCO (2021, p. 34)</span>`,
+        imgUrl: "https://ulicoricr.sharepoint.com/sites/GPe_Digital/_layouts/15/embed.aspx?UniqueId=23e4e6a7-c385-4e77-aa02-ba9b604157df"
+    }
+];
 
         function showTime(index, node) {
-            document.querySelectorAll('.timeline-node').forEach(n => n.classList.remove('active'));
-            node.classList.add('active');
-            document.getElementById('time-title').innerHTML = timelineData[index].title;
-            document.getElementById('time-desc').innerHTML = timelineData[index].desc;
-            document.getElementById('time-cite').innerHTML = timelineData[index].cite;
-        }
+    document.querySelectorAll('.timeline-node').forEach(n => n.classList.remove('active'));
+    node.classList.add('active');
+    
+    // Actualizar textos
+    document.getElementById('time-title').innerHTML = timelineData[index].title;
+    document.getElementById('time-desc').innerHTML = timelineData[index].desc;
+    document.getElementById('time-cite').innerHTML = timelineData[index].cite;
+    
+    // Actualizar Imagen/Iframe
+    const iframe = document.getElementById('time-iframe');
+    const trigger = document.getElementById('time-lightbox-trigger');
+    const imgUrl = timelineData[index].imgUrl;
+    
+    iframe.src = imgUrl;
+    // Actualizamos el onclick del disparador
+    trigger.setAttribute('onclick', `openLightbox('iframe', '${imgUrl}')`);
+}
 
         // MOTOR LOGÍSTICO COMPLETO DE LA TRIVIA
         const initialStudentsList = [
